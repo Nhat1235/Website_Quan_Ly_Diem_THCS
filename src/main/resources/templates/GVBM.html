@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="gvbm.css">
+</head>
+<style>
+.banner{
+    width: 100%;
+    height: 250px;
+}
+.dangxuat{
+    float: right;
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: red;
+    color: white;
+    border-radius: 20px/20px;
+    width: 100px;
+    height: 40px;
+}
+.text-quanly{
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.main{
+    width: 90%;
+    margin: 0 auto;
+}
+.danhsach{
+    height: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.nut{
+    width: 100px;
+    border-radius: 20px/20px;
+    height: 30px;
+    
+}
+.sua{
+    background-color: teal;
+    color: white;
+}
+.capnhat{
+    background-color: blue;
+    color: white;
+}
+</style>
+<body>
+    <div>
+        <header class="main">
+            <h2 class="text-quanly">Quản lý điểm học sinh</h2>
+            <button class="dangxuat" type="button" >Đăng xuất</button>
+        </header>
+    </div>
+    
+    <div>
+        <img class="banner" src="/image/banner.jpg" alt="">
+    </div>
+    
+    <div class="main">
+        <div>
+            <select class="danhsach">
+                <option>Danh sách lớp</option>
+                <option>option02</option>
+                <option>option03</option>
+                <option>option04</option>
+                <option>option05</option>
+                <option>option06</option>
+                <option>option07</option>
+                <option>option08</option>
+                <option>option09</option>
+                <option>option10</option>
+                </select>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Mã HS</th>
+                        <th scope="col">Họ và tên</th>
+                        <th scope="col">Điểm HS 1</th>
+                        <th scope="col">Điểm HS 2</th>
+                        <th scope="col">Điểm HS 3</th>
+                        <th scope="col">TBHK1</th>
+                        <th scope="col">TBHK2</th>
+                        <th scope="col">Cả năm</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nothing</td>
+                        <td>Nothing</td>
+                        <td>Nothing</td>
+                        <td>Nothing</td>
+                        <td>Nothing</td>
+                        <td>Nothing</td>
+                        <td>Nothing</td>
+                        <td>Nothing</td>
+                        <td>
+                            <button class="nut sua" type="button">Sửa</button>
+                            <button class="nut capnhat" type="button">Cập nhật</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
+
