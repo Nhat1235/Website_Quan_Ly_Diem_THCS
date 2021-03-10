@@ -2,7 +2,10 @@ package com.example.demo.model;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +23,8 @@ import lombok.Setter;
 @Setter
 public class GV_Lop_Mon {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "IDGV_L_M")
 	private Integer IdGv_L_M;
 	private boolean TrangThai;
 	

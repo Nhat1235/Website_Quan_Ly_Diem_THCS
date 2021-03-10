@@ -2,7 +2,10 @@ package com.example.demo.model;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -13,11 +16,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "mon")
-@Data
-@Getter
-@Setter
 public class Mon {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "IDMon")
 	private Integer IdMon;
 	private String TenMon;
 	
@@ -31,5 +33,30 @@ public class Mon {
 	public void setDauDiem(Collection<DauDiem> daudiem) {
 		this.daudiem = daudiem;
 	}
+
+	public Integer getIdMon() {
+		return IdMon;
+	}
+
+	public void setIdMon(Integer idMon) {
+		IdMon = idMon;
+	}
+
+	public String getTenMon() {
+		return TenMon;
+	}
+
+	public void setTenMon(String tenMon) {
+		TenMon = tenMon;
+	}
+
+	public Collection<DauDiem> getDaudiem() {
+		return daudiem;
+	}
+
+	public void setDaudiem(Collection<DauDiem> daudiem) {
+		this.daudiem = daudiem;
+	}
+	
 	
 }
