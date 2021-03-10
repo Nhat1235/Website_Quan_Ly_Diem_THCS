@@ -15,9 +15,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "lop")
-@Data
-@Getter
-@Setter
+
 public class Lop {
 	@Id
 	private Integer idlop;
@@ -38,4 +36,37 @@ public class Lop {
 	public void setLop_hs(Collection<Lop_hs> lopc) {
 		this.lopc = lopc;
 	}
+
+	public Integer getIdlop() {
+		return idlop;
+	}
+
+	public void setIdlop(Integer idlop) {
+		this.idlop = idlop;
+	}
+
+	public String getTenlop() {
+		return tenlop;
+	}
+
+	public void setTenlop(String tenlop) {
+		this.tenlop = tenlop;
+	}
+
+	public KhoaHoc getKhoahocfk() {
+		return khoahocfk;
+	}
+
+	public void setKhoahocfk(KhoaHoc khoahocfk) {
+		this.khoahocfk = khoahocfk;
+	}
+
+	public Collection<Lop_hs> getLopc() {
+		return lopc;
+	}
+
+	public void setLopc(Collection<Lop_hs> lopc) {
+		this.lopc = lopc;
+	}
+	
 }

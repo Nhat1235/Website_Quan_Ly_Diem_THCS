@@ -23,6 +23,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	private static final String[] PUBLIC_MATCHERS = {
+			"/css/**",
+			"/js/**",
+			"/image/**",
+			"/",	
+			"/login",
+			"/quan-ly-diem",			
+	};
+	
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
@@ -47,7 +56,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				
 				// cho phép hiệu ứng, không chặn các file css,js,bootstrap
-				.antMatchers("/", "/Dangky","/shop","/shop-detail/**","/cart").permitAll()
+				.antMatchers(PUBLIC_MATCHERS).permitAll()
 				
 				.antMatchers("/resources/**", "/templates/**", "/static/**", "/css/**","/js/**", "/image/**", "/webfonts/**").permitAll()
 				 
@@ -60,7 +69,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	  @Override
 	    public void configure(WebSecurity web) throws Exception {
-	       web.ignoring().antMatchers("/css/**","/js/**","/image/**","/webfonts/**","/icon/**");
+	       web.ignoring().antMatchers("/css/**","/js/**","/image/**","/webfonts/**","/static/**");
 	    }
 	
 }

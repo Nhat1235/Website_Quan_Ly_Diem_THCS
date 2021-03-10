@@ -13,9 +13,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "taikhoangv")
-//@Data
-//@Getter
-//@Setter
+
 public class TaiKhoanGv {
 	@Id
 	private Integer id;

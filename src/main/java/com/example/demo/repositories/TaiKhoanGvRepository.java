@@ -15,5 +15,7 @@ public interface TaiKhoanGvRepository extends JpaRepository<TaiKhoanGv, Integer>
 
 	@Query(value = "select * from taikhoangv where tentk = :tentk", nativeQuery = true)
 	public Optional<TaiKhoanGv> findTaiKhoanGvByTentk(@Param("tentk") String username);
-
+    
+	@Query(value="select * from giaovien inner join taikhoangv on taikhoangv.idgv = giaovien.idgv where taikhoangv.tentk=:tentk", nativeQuery = true)
+	public TaiKhoanGv findAllDetail(@Param("tentk") String username);
 }

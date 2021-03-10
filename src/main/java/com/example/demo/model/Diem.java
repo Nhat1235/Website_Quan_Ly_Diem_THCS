@@ -12,9 +12,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "diem")
-@Data
-@Getter
-@Setter
+
 public class Diem {
 	@Id
 	private Integer idDiem;
@@ -32,5 +30,54 @@ public class Diem {
 	@ManyToOne
 	@JoinColumn(name="IDLopHS")
 	private Lop_hs IDLopHS;
+
+	public Integer getIdDiem() {
+		return idDiem;
+	}
+
+	public void setIdDiem(Integer idDiem) {
+		this.idDiem = idDiem;
+	}
+
+	public Integer getDiem() {
+		return Diem;
+	}
+
+	public void setDiem(Integer diem) {
+		Diem = diem;
+	}
+
+	public boolean isTrangThai() {
+		return TrangThai;
+	}
+
+	public void setTrangThai(boolean trangThai) {
+		TrangThai = trangThai;
+	}
+
+	public GV_Lop_Mon getIDGV_L_M() {
+		return IDGV_L_M;
+	}
+
+	public void setIDGV_L_M(GV_Lop_Mon iDGV_L_M) {
+		IDGV_L_M = iDGV_L_M;
+	}
+
+	public Diem getIDDauDiem() {
+		return IDDauDiem;
+	}
+
+	public void setIDDauDiem(Diem iDDauDiem) {
+		IDDauDiem = iDDauDiem;
+	}
+
+	public Lop_hs getIDLopHS() {
+		return IDLopHS;
+	}
+
+	public void setIDLopHS(Lop_hs iDLopHS) {
+		IDLopHS = iDLopHS;
+	}
+	
 	
 }

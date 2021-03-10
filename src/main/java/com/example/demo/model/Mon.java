@@ -13,9 +13,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "mon")
-@Data
-@Getter
-@Setter
+
 public class Mon {
 	@Id
 	private Integer IdMon;
@@ -24,6 +22,7 @@ public class Mon {
 	@OneToMany(mappedBy = "IDMonc")
 	private Collection<DauDiem> daudiem;
 	
+	
 	public Collection<DauDiem> getDauDiem() {
 		return daudiem;
 	}
@@ -31,5 +30,30 @@ public class Mon {
 	public void setDauDiem(Collection<DauDiem> daudiem) {
 		this.daudiem = daudiem;
 	}
+
+	public Integer getIdMon() {
+		return IdMon;
+	}
+
+	public void setIdMon(Integer idMon) {
+		IdMon = idMon;
+	}
+
+	public String getTenMon() {
+		return TenMon;
+	}
+
+	public void setTenMon(String tenMon) {
+		TenMon = tenMon;
+	}
+
+	public Collection<DauDiem> getDaudiem() {
+		return daudiem;
+	}
+
+	public void setDaudiem(Collection<DauDiem> daudiem) {
+		this.daudiem = daudiem;
+	}
+	
 	
 }
