@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Friend form</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Friend Form</h1>
+	<!-- 	<form th:action="@{saveDD}" method="POST" th:object="${daudiem}">
+		<table>
+			<tr>
+				<td>loai dau diem</td>
+				<td><input th:field="*{loaiDauDiem}" type="text" name="name" /></td>
+				<td>
+				<select th:each="dcm:${tendaudiem}">
+					<option th:value="*{dcm.IDMonc.IdMon}" th:text="*{dcm.loaiDauDiem}"/>
+				</select></td>
+				<td><input type="submit" name="add" value="Thêm"></td>
+			</tr>
+
+
+		</table>
+	</form> -->
+	<div> 
+	<A th:each="dcm:${tendaudiem}" th:text="*{dcm.IDMonc.TenMon}"></A>
+	    <select >
+		   <option th:each="dcm:${tendaudiem}"  th:value="*{dcm.IDMonc}" th:text="*{dcm.loaiDauDiem}" /> 
+		</select> 
+		
+	</div>
+	
+       <form th:action="@{saveDD}" method="post" th:object="${daudiem}" >
+       Loai dau diem:<input th:field="*{loaiDauDiem}" type="text" name="name" />
+       
+       IDMOn<input th:field="*{IDMonc}" type="text" name="name" />
+          
+		<select th:field="*{IDMonc}">
+			
+		<option th:each="dcm:${tendaudiem}" th:value="*{IDMonc}" /> 
+		</select>   
+		
+       <input type="submit" name="add" value="Thêm">
+       </form>
+		
+
+</body>
+</html>

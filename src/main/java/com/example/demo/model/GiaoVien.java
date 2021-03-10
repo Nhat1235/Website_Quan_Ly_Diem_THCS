@@ -3,6 +3,7 @@ package com.example.demo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,12 +12,10 @@ import javax.persistence.Table;
 
 public class GiaoVien {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "IDGV")
 	private Integer IdGv;
-
-	@Column(name = "Ten")
 	private String ten;
-	@Column(name = "ChucVu")
 	private String chucvu;
 
 	public Integer getIdGv() {

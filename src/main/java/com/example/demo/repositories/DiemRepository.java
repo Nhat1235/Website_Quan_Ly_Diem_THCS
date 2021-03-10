@@ -11,7 +11,6 @@ import com.example.demo.model.Diem;
 
 @Repository
 public interface DiemRepository extends JpaRepository<Diem, Integer>{
-
 	 @Query(value="select * from diem \r\n" + 
 	    		"inner join lop_hs inner join lop on lop_hs.idlop = lop.idlop inner join hocsinh on lop_hs.idhocsinh = hocsinh.idhocsinh on diem.IdlopHS = lop_hs.idlophs \r\n" + 
 	    		"inner join daudiem on diem.iddaudiem = daudiem.iddaudiem \r\n" + 

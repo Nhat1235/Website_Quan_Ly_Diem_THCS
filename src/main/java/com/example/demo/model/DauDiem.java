@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,18 +16,44 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "DauDiem")
-@Data
-@Getter
-@Setter
+
 public class DauDiem {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "IDDauDiem")
 	private Integer idDauDiem;
 	private String loaiDauDiem;
 
 	@ManyToOne
 	@JoinColumn(name="IDMon")
 	private Mon IDMonc;
+
 	
+	public DauDiem() {
+	}
+
+	public Integer getIdDauDiem() {
+		return idDauDiem;
+	}
+
+	public void setIdDauDiem(Integer idDauDiem) {
+		this.idDauDiem = idDauDiem;
+	}
+
+	public String getLoaiDauDiem() {
+		return loaiDauDiem;
+	}
+
+	public void setLoaiDauDiem(String loaiDauDiem) {
+		this.loaiDauDiem = loaiDauDiem;
+	}
+
+	public Mon getIDMonc() {
+		return IDMonc;
+	}
+
+	public void setIDMonc(Mon iDMonc) {
+		IDMonc = iDMonc;
+	}
 	
 }
