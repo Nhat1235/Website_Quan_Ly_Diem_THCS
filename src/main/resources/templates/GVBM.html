@@ -146,25 +146,36 @@
       </div>
       <div class="modal-body">
       
-        <table id="table1" class="display" style="width: 100%">
-				<thead>
-					<tr>
+        <table id="table1" class="display table table-striped table-bordered dt-responsive nowrap" style="width: 100%" >
+				<thead >
+					<tr >
 						<th>Họ và Tên</th>
 						<th>Lớp</th>
-						<th>Điểm</th>
+						<th th:each="diemlist:${diemlist}" th:text="*{diemlist.IDDauDiem.loaiDauDiem}"></th>
 
 
 					</tr>
 				</thead>
-				<tbody th:each="diemlist:${diemlist}">
-					<tr>
-					    <td th:text="*{diemlist.IDLopHS.idhs.tenhocsinh}"></td> 
-					   
-					    <td th:text="*{diemlist.IDLopHS.idLopc.tenlop}"></td> 
-					    <td th:text="*{diemlist.diem}"></td> 
+				<tbody>
+					<!-- <tr th:each="diemlist:${diemlist}"> -->
+					
+					
+					
+					  <!--   <td id="num1" th:text="*{diemlist.IDLopHS.idhs.tenhocsinh}"></td>
+					    
+					    <td  id="num2" th:text="*{diemlist.IDLopHS.idLopc.tenlop}"></td>
+					    
+					     <td th:text="*{diemlist.IDGV_L_M.IDMon.TenMon}"></td>  -->
+					     
+					     
+					    <tr>
+					    <td  th:each="hsllist:${hsllist}" th:text="*{hsllist.idhs.tenhocsinh}"></td>
+					    <td  th:each="hsllist:${hsllist}" th:text="*{hsllist.idLopc.tenlop}"></td>
+					    <td  th:each="diemlist:${diemlist}"><p th:text="*{diemlist.diem}"></p></td> 
 						
 						<!-- <td><a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Thêm điểm">+</a></td> -->
 					</tr>
+					
 				</tbody>
 				<tfoot>
 
@@ -185,7 +196,29 @@
 <script>
 	$(document).ready(function() {
 		$('#table').DataTable();
-		$('#table1').DataTable();
+		$('#table1').DataTable({
+
+			columnDefs: [{
+			orderable: false,
+			className: 'select-checkbox',
+			targets: 0
+			}],
+			select: {
+			style: 'os',
+			selector: 'td:first-child'
+			}
+			});
+		
+		var p = $(".intro").find('p:nth-child(2)').html()
+		
+		console.log(document.getElementById("num1").innerHTML);
+		console.log(document.getElementById("num2").innerHTML);
+		console.log(document.getElementById("num3").innerHTML);
+		
+		document.getElementById("num1").innerHTML;
+		document.getElementById("num2").innerHTML;
+		document.getElementById("num3").innerHTML;
+		
 	});
 </script>
 </html>

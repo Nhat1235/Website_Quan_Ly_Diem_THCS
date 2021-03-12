@@ -25,7 +25,7 @@ public class Diem {
 	
 	@ManyToOne
 	@JoinColumn(name="IDDauDiem")
-	private Diem IDDauDiem;
+	private DauDiem IDDauDiem;
 	
 	@ManyToOne
 	@JoinColumn(name="IDLopHS")
@@ -63,11 +63,11 @@ public class Diem {
 		IDGV_L_M = iDGV_L_M;
 	}
 
-	public Diem getIDDauDiem() {
+	public DauDiem getIDDauDiem() {
 		return IDDauDiem;
 	}
 
-	public void setIDDauDiem(Diem iDDauDiem) {
+	public void setIDDauDiem(DauDiem iDDauDiem) {
 		IDDauDiem = iDDauDiem;
 	}
 

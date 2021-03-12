@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.model.Diem;
 import com.example.demo.model.GV_Lop_Mon;
 import com.example.demo.model.GiaoVien;
+import com.example.demo.model.Lop_hs;
 import com.example.demo.model.TaiKhoanGv;
 import com.example.demo.repositories.DiemRepository;
 import com.example.demo.repositories.GiaoVienRepository;
+import com.example.demo.repositories.HocSinh_LopRepository;
 import com.example.demo.repositories.ShowLopDangDayRepository;
 import com.example.demo.repositories.TaiKhoanGvRepository;
 
@@ -33,6 +35,9 @@ public class ShowLopDangDayController {
 	@Autowired
 	DiemRepository DRepo;
 	
+	@Autowired
+	HocSinh_LopRepository hslrepo;
+	
 	@GetMapping("GVBM")
 	public String slddC(ModelMap model,Authentication authentication) {
 		TaiKhoanGv tkgv = TKGvRepo.findAllDetail(authentication.getName());
@@ -44,6 +49,10 @@ public class ShowLopDangDayController {
 		}
 		System.out.println("Print Data:"+tkgv.getGiaovienfk().getTen()+" "+authentication.getName()+" Lop:"+lop);
 		List<Diem> diemlist = DRepo.findDiemLop(lop);
+		
+		List<Lop_hs> hsllist = hslrepo.getHS();
+		
+		model.addAttribute("hsllist", hsllist);
 		model.addAttribute("diemlist", diemlist);
 		model.addAttribute("list", list);
 		return "GVBM";

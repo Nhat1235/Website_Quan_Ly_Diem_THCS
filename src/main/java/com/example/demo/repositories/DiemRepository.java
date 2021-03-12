@@ -17,4 +17,9 @@ public interface DiemRepository extends JpaRepository<Diem, Integer>{
 	    		"inner join GV_lop_mon inner join giaovien on GV_lop_mon.idGV = giaovien.idGV inner join Mon on GV_lop_mon.idmon = mon.idmon on diem.idgv_l_m = GV_lop_mon.idgv_l_m\r\n" + 
 	    		"where tenlop=:tenlop",nativeQuery = true)
 	 List<Diem>findDiemLop(@Param("tenlop")String tenlop);
+	 
+	 
+	 
+//	 List<Diem>findDiemByDauDiem(@Param("daudiem")String daudiem);
+	 
 }
