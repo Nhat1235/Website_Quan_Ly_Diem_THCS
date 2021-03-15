@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Friend form</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Friend Form</h1>
+	<form th:action="@{saveMon}" method="POST" th:object="${mon}">
+		<table>
+			<tr>
+				<td>name</td>
+				<td><input th:field="*{TenMon}" type="text" name="name" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" name="addHK" value="Thêm"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

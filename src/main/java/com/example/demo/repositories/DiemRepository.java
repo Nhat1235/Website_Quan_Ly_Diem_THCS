@@ -11,6 +11,7 @@ import com.example.demo.model.Diem;
 
 @Repository
 public interface DiemRepository extends JpaRepository<Diem, Integer>{
+	
 	 @Query(value="select * from diem \r\n" + 
 	    		"inner join lop_hs inner join lop on lop_hs.idlop = lop.idlop inner join hocsinh on lop_hs.idhocsinh = hocsinh.idhocsinh on diem.IdlopHS = lop_hs.idlophs \r\n" + 
 	    		"inner join daudiem on diem.iddaudiem = daudiem.iddaudiem \r\n" + 
@@ -19,7 +20,9 @@ public interface DiemRepository extends JpaRepository<Diem, Integer>{
 	 List<Diem>findDiemLop(@Param("tenlop")String tenlop);
 	 
 	 
-	 
-//	 List<Diem>findDiemByDauDiem(@Param("daudiem")String daudiem);
+	 @Query(value="select * from Diem inner join Lop_HS on Diem.IDLopHS = Lop_HS.IDLopHS\r\n" + 
+	 		"					inner join DauDiem on Diem.IDDauDiem = DauDiem.IDDauDiem\r\n" + 
+	 		"                    inner join GV_Lop_Mon on Diem.IDGV_L_M = GV_Lop_Mon.IDGV_L_M",nativeQuery = true)
+	 List<Diem> getAll();
 	 
 }

@@ -25,4 +25,10 @@ public class DauDiemService {
 	public List<DauDiem> getDauDiemMon(){
 		return dauDiemRepository.getDauDiemMon();
 	}
+	
+	public void delete(Integer id) {
+		dauDiemRepository.deleteById(id);
+	}
+	
 }
+

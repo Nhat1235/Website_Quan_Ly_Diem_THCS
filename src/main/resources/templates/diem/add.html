@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Friend form</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Friend Form</h1>
+	<form th:action="@{doSave}" method="POST" th:object="${diem}">
+
+		Điểm : <input th:field="*{Diem}" type="text" name="name" /> 
+		<input th:field="*{TrangThai}" type="text" name="name" value="0" hidden=""/>
+		<table>
+			<tr>
+				<td>ID GVLM</td>
+				<td><select th:field="*{IDGV_L_M}">
+						<option th:each="id : ${GVLM}" th:value="${id.IdGv_L_M}"
+							th:text="${id.IDLop.tenlop}  + ' - ' + ${id.IDGV.ten}  + ' - ' + ${id.IDMon.TenMon}  " />
+				</select></td>
+			</tr>
+			<tr>
+				<td>ID Lớp HS</td>
+				<td><select th:field="*{IDLopHS}">
+						<option th:each="id : ${lophs}" th:value="${id.IdLopHs}"
+							th:text="${id.idhs.tenhocsinh}  + ' - ' + ${id.idLopc.tenlop}  " />
+				</select></td>
+			</tr>
+			<tr>
+				<td>ID Đầu Điểm</td>
+				<td><select th:field="*{IDDauDiem}">
+						<option th:each="id : ${daudiem}" th:value="${id.idDauDiem}"
+							th:text="${id.loaiDauDiem} " />
+				</select></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" name="add" value="Thêm"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

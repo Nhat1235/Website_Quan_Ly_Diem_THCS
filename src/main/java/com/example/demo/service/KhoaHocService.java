@@ -25,4 +25,9 @@ public class KhoaHocService {
 //	public List<KhoaHoc> getNamKhoaHoc() {
 //		return khoaHocRepository.getNamKhoaHoc();
 //	}
+	public void delete(Integer id) {
+		khoaHocRepository.deleteById(id);
+	}
+	
+	
 }

@@ -15,6 +15,7 @@ public class PhanMemQuanLyDiemThcsApplication {
 	
     
 	public static void main(String[] args) {
+		
 		SpringApplication.run(PhanMemQuanLyDiemThcsApplication.class, args);
 	    
 	}

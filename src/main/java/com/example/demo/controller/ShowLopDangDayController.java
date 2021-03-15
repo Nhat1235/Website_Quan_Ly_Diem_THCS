@@ -25,33 +25,34 @@ import com.example.demo.repositories.TaiKhoanGvRepository;
 
 @Controller
 public class ShowLopDangDayController {
-    
+
 	@Autowired
 	ShowLopDangDayRepository repo;
-	
+
 	@Autowired
 	TaiKhoanGvRepository TKGvRepo;
-	
+
 	@Autowired
 	DiemRepository DRepo;
-	
+
 	@Autowired
 	HocSinh_LopRepository hslrepo;
-	
+
 	@GetMapping("GVBM")
-	public String slddC(ModelMap model,Authentication authentication) {
+	public String slddC(ModelMap model, Authentication authentication) {
 		TaiKhoanGv tkgv = TKGvRepo.findAllDetail(authentication.getName());
 
-		String lop="";
+		String lop = "";
 		List<GV_Lop_Mon> list = repo.FindLopDangDay(tkgv.getGiaovienfk().getTen());
-		for(GV_Lop_Mon list2 : list) {
+		for (GV_Lop_Mon list2 : list) {
 			lop = list2.getIDLop().getTenlop();
 		}
-		System.out.println("Print Data:"+tkgv.getGiaovienfk().getTen()+" "+authentication.getName()+" Lop:"+lop);
+		System.out.println(
+				"Print Data:" + tkgv.getGiaovienfk().getTen() + " " + authentication.getName() + " Lop:" + lop);
 		List<Diem> diemlist = DRepo.findDiemLop(lop);
-		
+
 		List<Lop_hs> hsllist = hslrepo.getHS();
-		
+
 		model.addAttribute("hsllist", hsllist);
 		model.addAttribute("diemlist", diemlist);
 		model.addAttribute("list", list);

@@ -20,4 +20,11 @@ public class DiemService {
 		return diemRepository.findAll();
 	}
 	
+	public List<Diem> getAll(){
+		return diemRepository.getAll();
+	}
+	public void save(Diem diem) {
+		diemRepository.save(diem);
+	}
+	
 }
