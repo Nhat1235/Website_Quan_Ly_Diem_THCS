@@ -48,6 +48,7 @@ public class ShowLopDangDayController {
 			lop = list2.getIDLop().getTenlop();
 		}
 		System.out.println("Print Data:"+tkgv.getGiaovienfk().getTen()+" "+authentication.getName()+" Lop:"+lop);
+		
 		List<Diem> diemlist = DRepo.findDiemLop(lop);
 		
 		List<Lop_hs> hsllist = hslrepo.getHS();
