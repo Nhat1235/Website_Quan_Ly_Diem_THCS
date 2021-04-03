@@ -1,0 +1,204 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="index_side">
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+	integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+	crossorigin="anonymous" />
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<style>
+@import
+	url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500');
+
+body {
+	overflow-x: hidden;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+}
+
+/* Toggle Styles */
+#viewport {
+	padding-left: 250px;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#content {
+	width: 100%;
+	position: relative;
+	margin-right: 0;
+}
+
+/* Sidebar Styles */
+#sidebar {
+	z-index: 1000;
+	position: fixed;
+	left: 250px;
+	width: 250px;
+	height: 100%;
+	margin-left: -250px;
+	overflow-y: auto;
+	background: #37474F;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#sidebar header {
+	background-color: #263238;
+	font-size: 20px;
+	line-height: 52px;
+	text-align: center;
+}
+
+#sidebar header a {
+	color: #fff;
+	display: block;
+	text-decoration: none;
+}
+
+#sidebar header a:hover {
+	color: #fff;
+}
+
+#sidebar .nav {
+	
+}
+
+#sidebar .nav a {
+	background: none;
+	border-bottom: 1px solid #455A64;
+	color: #CFD8DC;
+	font-size: 14px;
+	padding: 16px 24px;
+}
+
+#sidebar .nav a:hover {
+	background: none;
+	color: #ECEFF1;
+}
+
+#sidebar .nav a i {
+	margin-right: 16px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+}
+
+.title {
+  color: #CFD8DC;
+  font-size: 18px;
+}
+
+a {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: #CFD8DC;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: #CFD8DC;
+}
+
+ a:hover {
+  color:red;
+  text-decoration: none;
+}
+
+</style>
+<body>
+	<div id="viewport">
+		<!-- Sidebar -->
+		<div id="sidebar">
+			 <header>
+				<a href="#">Quản lý điểm</a>
+			</header>
+			
+					<div class="card" style="margin-top: 7px">
+						<img src="https://www.shareicon.net/data/512x512/2016/09/01/822711_user_512x512.png" alt="John" style="width: 80%">
+						<h1 style="color: black" th:text="*{tk.giaovienfk.ten}"></h1>
+						<p  class="title" th:text="*{tk.tentk} +' - '+*{tk.chucvu}"></p>
+						
+						<p style="color: #CFD8DC">Trung học cơ sở Thuần Mỹ</p>
+						
+							<a href="/logout" >Đăng xuất</a>
+						
+					</div> 
+				
+				
+			<ul class="nav">
+				<li><a href="/GVBM"> <i class="fas fa-chalkboard-teacher"></i>Giáo viên bộ môn</a></li>
+		
+
+				<!--  <li>
+        <a href="#">
+          <i class="zmdi zmdi-link"></i> Shortcuts
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="zmdi zmdi-widgets"></i> Overview
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="zmdi zmdi-calendar"></i> Events
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="zmdi zmdi-info-outline"></i> About
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="zmdi zmdi-settings"></i> Services
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="zmdi zmdi-comment-more"></i> Contact
+        </a>
+      </li> -->
+			</ul>
+		</div>
+		<!-- Content -->
+		<div id="content">
+			<!-- <nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav navbar-right">
+						
+					</ul>
+				</div>
+			</nav> -->
+			<div class="container-fluid">
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

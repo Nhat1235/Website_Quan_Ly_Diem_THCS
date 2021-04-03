@@ -3,6 +3,7 @@ package com.example.demo.securityconf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -27,9 +29,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 			"/css/**",
 			"/js/**",
 			"/image/**",
+			"static/**",
+			"/img/**",
 			"/",	
 			"/login",
-			"/quan-ly-diem",			
+			"/quan-ly-diem",
+			"/assets/**"
 	};
 	
     @Override
@@ -52,13 +57,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //		http.authorizeRequests().antMatchers("/admin/assets/datatable/datatables.css").permitAll().and().csrf()
 //				.disable();
-
+		http.csrf().disable();
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/js/**", "/css/**", "/img/**" ,"/assets/**", "/public/**", "/index", "/", "/login").permitAll();
 		http.authorizeRequests()
 				
 				// cho phép hiệu ứng, không chặn các file css,js,bootstrap
 				.antMatchers(PUBLIC_MATCHERS).permitAll()
 				
-				.antMatchers("/resources/**", "/templates/**", "/static/**", "/css/**","/js/**", "/image/**", "/webfonts/**").permitAll()
+				.antMatchers("/resources/**", "/templates/**", "/static/**", "/css/**","/js/**", "/image/**", "/webfonts/**,/assets/**").permitAll()
 				 
 				.anyRequest().fullyAuthenticated().and().formLogin().loginPage("/login").permitAll()
 				.defaultSuccessUrl("/", true).and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
@@ -69,7 +75,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	  @Override
 	    public void configure(WebSecurity web) throws Exception {
-	       web.ignoring().antMatchers("/css/**","/js/**","/image/**","/webfonts/**","/static/**");
+	       web.ignoring().antMatchers("/css/**","/js/**","/image/**","/assets/**","/static/**");
 	    }
-	
+	  
+	  
 }

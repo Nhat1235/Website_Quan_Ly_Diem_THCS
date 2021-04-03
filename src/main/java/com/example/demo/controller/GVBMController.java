@@ -16,14 +16,14 @@ public class GVBMController {
 	@Autowired
 	private TaiKhoanGvRepository repo;
 	
-	@GetMapping("/")
-	public String gvbmProfile(ModelMap model, Authentication authentication) {
-
-		TaiKhoanGv tk = repo.findAllDetail(authentication.getName());
-		System.out.println(tk);
-		model.addAttribute("tk",tk);
-		return "Profile";
-	}
+//	@GetMapping("/")
+//	public String gvbmProfile(ModelMap model, Authentication authentication) {
+//
+//		TaiKhoanGv tk = repo.findAllDetail(authentication.getName());
+//		System.out.println(tk);
+//		model.addAttribute("tk",tk);
+//		return "index";
+//	}
 	
 //	@GetMapping("/quan-ly-diem")
 //	public String gvbm(ModelMap model) {

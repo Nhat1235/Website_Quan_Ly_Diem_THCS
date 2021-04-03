@@ -16,5 +16,8 @@ public interface ShowLopDangDayRepository extends JpaRepository<GV_Lop_Mon, Inte
     @Query(value = "select * from gv_lop_mon inner join lop on gv_lop_mon.idlop = lop.idlop inner join giaovien on GV_lop_mon.idGV = giaovien.idGV inner join Mon on GV_lop_mon.idmon = mon.idmon where ten=:ten",nativeQuery = true)
     List<GV_Lop_Mon> FindLopDangDay(@Param("ten")String TenGV);
     
+    @Query(value = "select * from gv_lop_mon inner join lop on gv_lop_mon.idlop = lop.idlop inner join giaovien on GV_lop_mon.idGV = giaovien.idGV inner join Mon on GV_lop_mon.idmon = mon.idmon where ten=:ten and idkhoahoc=:idkhoahoc and idHocKy=:idhocki",nativeQuery = true)
+    List<GV_Lop_Mon> FindLopByKhoahoc(@Param("ten")String TenGV, @Param("idkhoahoc")String idkhoahoc,@Param("idhocki")String idhocki);
+    
     
 }

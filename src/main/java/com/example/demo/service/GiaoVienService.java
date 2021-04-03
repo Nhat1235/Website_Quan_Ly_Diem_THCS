@@ -23,4 +23,7 @@ public class GiaoVienService {
 		giaoVienRepository.save(giaovien);
 	}
 	
+	public void delete(Integer id) {
+		giaoVienRepository.deleteById(id);
+	}
 }

@@ -24,4 +24,7 @@ public class HocKyService {
 		hocKyRepository.save(hocky);
 	}
 	
+	public void delete(Integer id) {
+		hocKyRepository.deleteById(id);
+	}
 }

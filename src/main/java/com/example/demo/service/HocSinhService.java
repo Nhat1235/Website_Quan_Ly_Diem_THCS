@@ -18,4 +18,8 @@ public class HocSinhService {
 		hocSinhRepository.save(hocsinh);
 	}
 	
+	public void delete(Integer id) {
+		hocSinhRepository.deleteById(id);	
+	}
+	
 }
