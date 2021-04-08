@@ -10,8 +10,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +51,7 @@ import com.example.demo.model.Mon;
 import com.example.demo.model.TaiKhoanGv;
 import com.example.demo.repositories.DauDiemRepository;
 import com.example.demo.repositories.DiemRepository;
+import com.example.demo.repositories.DiemTemp;
 import com.example.demo.repositories.GiaoVienRepository;
 import com.example.demo.repositories.HocKyRepository;
 import com.example.demo.repositories.HocSinh_LopRepository;
@@ -86,31 +89,32 @@ public class ShowLopDangDayController {
 
 	@Autowired
 	HocKyRepository hkrepo;
-	
-	@RequestMapping("GV/findKH")
-	public String findkh(ModelMap model, @RequestParam("cbb") String keyword , @RequestParam("cbb2") String keyword2, Authentication authentication) {
 
-		System.out.println("combobox value: " + keyword + ""+ keyword2);
-		
+	@RequestMapping("GV/findKH")
+	public String findkh(ModelMap model, @RequestParam("cbb") String keyword, @RequestParam("cbb2") String keyword2,
+			Authentication authentication) {
+
+		System.out.println("combobox value: " + keyword + "" + keyword2);
+
 		// Combobox khóa học
 		List<KhoaHoc> kh = khrepo.findAll();
 
-		//Combobox Học kỳ
+		// Combobox Học kỳ
 		List<HocKy> hk = hkrepo.findAllHK();
-		
+
 		for (HocKy list2 : hk) {
 			System.out.println(list2.getTenhocky());
 		}
-		
+
 		List<KhoaHoc> khoahoc1 = khrepo.findAll(keyword);
-		
+
 		System.out.println(khoahoc1);
-		
+
 		TaiKhoanGv tkgv = TKGvRepo.findAllDetail(authentication.getName());
 
 		String lop = "";
 
-		List<GV_Lop_Mon> list = repo.FindLopByKhoahoc(tkgv.getGiaovienfk().getTen(),keyword,keyword2);
+		List<GV_Lop_Mon> list = repo.FindLopByKhoahoc(tkgv.getGiaovienfk().getTen(), keyword, keyword2);
 		for (GV_Lop_Mon list2 : list) {
 			lop = list2.getIDLop().getTenlop();
 		}
@@ -122,7 +126,6 @@ public class ShowLopDangDayController {
 
 		List<Lop_hs> hsllist = hslrepo.getHS(lop);
 
-		
 		model.addAttribute("hk", hk);
 		model.addAttribute("kh", kh);
 		model.addAttribute("khoahoc1", khoahoc1);
@@ -140,9 +143,9 @@ public class ShowLopDangDayController {
 		// Combobox khóa học
 		List<KhoaHoc> kh = khrepo.findAll();
 
-		//Combobox Học kỳ
+		// Combobox Học kỳ
 		List<HocKy> hk = hkrepo.findAll();
-				
+
 		TaiKhoanGv tkgv = TKGvRepo.findAllDetail(authentication.getName());
 
 		String lop = "";
@@ -152,13 +155,13 @@ public class ShowLopDangDayController {
 			lop = list2.getIDLop().getTenlop();
 		}
 
-		System.out.println("Print Data:" + tkgv.getGiaovienfk().getTen() + " " + authentication.getName() + " Lop:" + lop + " IdGVLM:" + tkgv.getId());
+		System.out.println("Print Data:" + tkgv.getGiaovienfk().getTen() + " " + authentication.getName() + " Lop:"
+				+ lop + " IdGVLM:" + tkgv.getId());
 //		List<DauDiem> DDlist = rep.getDauDiemByLop(1);
 		List<Diem> diemlist = DRepo.findDiemLop(lop);
 
 		List<Lop_hs> hsllist = hslrepo.getHS(lop);
 
-		
 		model.addAttribute("hk", hk);
 		model.addAttribute("kh", kh);
 		model.addAttribute("hsllist", hsllist);
@@ -224,9 +227,37 @@ public class ShowLopDangDayController {
 		List<Diem> diemlist = DRepo.findDiemLop(lop);
 
 		List<Lop_hs> hsllist = hslrepo.getHS(lop);
+		String tenlp="";
+		for (int i = 0; i < hsllist.size(); i++) {
+			tenlp=hsllist.get(i).getIdLopc().getTenlop();
+		}
+		
+		
+		
+		List<Diem> diemlistByid = new ArrayList<>();
+
+		Map<String, List<Diem>> l = new HashMap();
+		for (int i = 0; i < hsllist.size(); i++) {
+			System.out.println("với id_hs: " + hsllist.get(i).getIdLopHs() + " - Học sinh: " + hsllist.get(i).getIdhs().getTenhocsinh());
+			diemlistByid = DRepo.findDiemById(hsllist.get(i).getIdLopc().getIdlop().toString().trim(),
+					hsllist.get(i).getIdLopHs().toString().trim());
+
+			for (int j = 0; j < diemlistByid.size(); j++) {
+				l.put(hsllist.get(i).getIdhs().getTenhocsinh(), diemlistByid);
+
+			}
+			for (Map.Entry<String, List<Diem>> entry : l.entrySet()) {
+				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+				model.addAttribute("l", l);
+			}
+
+		}
 
 		List<DauDiem> DDlist = rep.getDauDiemByMon(idM);
 
+		model.addAttribute("tenlp", tenlp);
+		model.addAttribute("l", l);
+		model.addAttribute("diemlistByid", diemlistByid);
 		model.addAttribute("idGVLM", idGVLM);
 		model.addAttribute("mon", mon);
 		model.addAttribute("tkgv", tkgv);

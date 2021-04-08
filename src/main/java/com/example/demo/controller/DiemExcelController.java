@@ -19,6 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.hssf.usermodel.DVConstraint;
+import org.apache.poi.hssf.usermodel.HSSFDataValidation;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -26,6 +30,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DataValidation;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -33,6 +38,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellRangeAddressList;
+import org.apache.poi.xssf.usermodel.XSSFDataValidation;
+import org.apache.poi.xssf.usermodel.XSSFDataValidationConstraint;
+import org.apache.poi.xssf.usermodel.XSSFDataValidationHelper;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -65,7 +75,7 @@ public class DiemExcelController {
 
 	@Autowired
 	TaiKhoanGvRepository TKGvRepo;
-	
+
 	@Autowired
 	DauDiemRepository rep;
 
@@ -78,15 +88,16 @@ public class DiemExcelController {
 	// POST: Sử lý Upload
 	@RequestMapping(value = "/GV/uploadOneFile/{idglm}", method = RequestMethod.POST)
 	public String uploadOneFileHandlerPOST(HttpServletRequest request, Model model,
-			@ModelAttribute("myUploadForm") MyUploadForm myUploadForm,Authentication authentication,@PathVariable("idglm")Integer idglm) {
+			@ModelAttribute("myUploadForm") MyUploadForm myUploadForm, Authentication authentication,
+			@PathVariable("idglm") Integer idglm) {
 		TaiKhoanGv tkgv = TKGvRepo.findAllDetail(authentication.getName());
-		model.addAttribute("tkgv",tkgv);
-		return this.doUpload(request, model, myUploadForm,idglm);
+		model.addAttribute("tkgv", tkgv);
+		return this.doUpload(request, model, myUploadForm, idglm);
 
 	}
 
 	private String doUpload(HttpServletRequest request, Model model, //
-			MyUploadForm myUploadForm,Integer idglm) {
+			MyUploadForm myUploadForm, Integer idglm) {
 
 		String description = myUploadForm.getDescription();
 		System.out.println("Description: " + description);
@@ -159,7 +170,7 @@ public class DiemExcelController {
 					DataFormatter dataFormatter = new DataFormatter();
 
 					// 1. You can obtain a rowIterator and columnIterator and iterate over them
-					System.out.println("\n\nIterating over Rows and Columns using Iterator\n");
+					System.out.println("--DUYỆT ĐẦU ĐIỂM--");
 
 					Iterator<Row> rowIterator = sheet.rowIterator();
 
@@ -179,7 +190,7 @@ public class DiemExcelController {
 								String idDauDiem = null;
 								idDauDiem = cell.toString();
 								String[] splitString = idDauDiem.split("-");
-								System.out.println("------------------------------");
+								System.out.println("+------------------------------+");
 								System.out.println(cell);
 								System.out.println(splitString[1].trim());
 								List<String> oddlist = new ArrayList<String>(Arrays.asList(header_Array));
@@ -189,142 +200,110 @@ public class DiemExcelController {
 
 								// Convert the Arraylist back to array
 								header_Array = oddlist.toArray(header_Array);
-								System.out.println("------------------------------");
+								
 							}
 
+							String y = "";
+
+							
 							// lấy cột họ tên
 							if (cell.getColumnIndex() == 0 && cell.getRowIndex() > 0) {
 
 								String[] splitString2 = cell.toString().split("-");
 
 								List<String> oddlist = new ArrayList<String>(Arrays.asList(colName_Array));
-
 								// Add the new element
 								oddlist.add(splitString2[1].trim());
 
 								// Convert the Arraylist back to array
 								colName_Array = oddlist.toArray(colName_Array);
-								String y = "";
-								for (int j = 0; j < colName_Array.length; j++) {
-									 y = (String) Array.get(colName_Array, j);
-								}
 								
-								List<Diem> list = Drepo.findAllByLopHS(y);
-								if(list.size()>0) {
-									Drepo.deleteAllByLopHS(y);
-									System.out.println("Delete successful by IDLopHS: "+y);
-								}else {
-									System.out.println("Nothing to delete!");
-								}
-								System.out.println("------------------------------");
-							}
-
-							// lấy cột điểm
-							if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
-								System.out.println("------------------------------");
-								System.out.println("Điểm: " + cell);
-								String x = "";
-								String y = "";
-								x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
-								System.out.println("Đầu điểm: " + x);
-
+								System.out.println(colName_Array.length);
+								
 								for (int j = 0; j < colName_Array.length; j++) {
 									y = (String) Array.get(colName_Array, j);
-									System.out.println("Mã HS_Lop: " + y);
+									 System.out.println("idhs: "+y);
+								}
 
-										String jdbcURL = "jdbc:mysql://localhost:3306/qldiem";
-										String username = "root";
-										String password = "12345678";
+								System.out.println("------------------------------KẾT THÚC THÊM ĐẦU ĐIỂM VÀO ARRAY--------------------------");
+							} // e
 
-										String excelFilePath = serverFile.getAbsolutePath();
+							String z = "";
+							
+							List<Diem> list1 = new ArrayList<>();
+							if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
 
-										int batchSize = 20;
+								for (int j = 0; j < colName_Array.length; j++) {
+									z = (String) Array.get(colName_Array, j);
+								}
+							    String idlophs = z.trim();
+							    String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
 
-										Connection connection = null;
+								
+							    list1 = Drepo.HelpMe(idlophs,x);
+								System.out.println("Số lg data có với đầu điểm "+x+": "+list1.size()+" idHocSinh: "+z);
+							}
+							
+							//begin
+							if (list1.size() > 0) {
+								String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
+								System.out.println("-------------Delete data đầu điểm "+x+"-----------");
+								
+									Drepo.deleteAllByLopHS(z.trim(), x.trim());
 
-										try {
-											long start = System.currentTimeMillis();
+									if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
+										
+										List<Diem> list = Drepo.HelpMe(z.trim(),x);
+										System.out.println("@@@@@@@@@@ Số lg data có với " +x+": "+list.size()+" @@@@@@@@");
+										
+										
+										System.out.println("----Update khi co data-----");
+										System.out.println("Điểm: " + cell);
+										String y1 = "";
+										
+										System.out.println("Đầu điểm: " + x);
 
-											FileInputStream inputStream = new FileInputStream(excelFilePath);
-
-											Workbook workbook2 = new XSSFWorkbook(inputStream);
-
-											Sheet firstSheet = workbook2.getSheetAt(0);
-											Iterator<Row> rowIterator2 = firstSheet.iterator();
-
-											connection = DriverManager.getConnection(jdbcURL, username, password);
-											connection.setAutoCommit(false);
-
-											String sql = "insert into diem (diem,trangthai,IDLopHS,IDDauDiem,IDGV_L_M) values(?,?,?,?,?)";
-											PreparedStatement preparedStatement = connection.prepareStatement(sql);
-											preparedStatement = connection.prepareStatement(sql);
-											int count = 0;
-
-											rowIterator2.next(); // skip the header row
-
-											// start1
-											while (rowIterator2.hasNext()) {
-												Row nextRow = rowIterator2.next();
-												Iterator<Cell> cellIterator2 = nextRow.cellIterator();
-
-												while (cellIterator2.hasNext()) {
-													Cell nextCell = cellIterator2.next();
-
-													int columnIndex = nextCell.getColumnIndex();
-
-													switch (columnIndex) {
-
-													case 0:
-														Double diemCell = (Double) cell.getNumericCellValue();
-														preparedStatement.setDouble(1, diemCell);
-														break;
-													case 1:
-														int trangthai = 0;
-														preparedStatement.setInt(2, trangthai);
-													case 2:
-														String IDLopHS = y.trim();
-														preparedStatement.setString(3, IDLopHS);
-													case 3:
-														String IDDauDiem = x.trim();
-														preparedStatement.setString(4, IDDauDiem);
-													case 4:
-														int IDGV_L_M = idglm;
-														preparedStatement.setInt(5, IDGV_L_M);
-													}
-
-												}
-
-												preparedStatement.addBatch();
-
-												if (count % batchSize == 0) {
-													preparedStatement.executeBatch();
-												}
-
-											}
-
-											workbook2.close();
-											
-											preparedStatement.close();
-											connection.commit();
-											connection.close();
-
-											long end = System.currentTimeMillis();
-											System.out.printf("Import done in %d ms\n", (end - start));
-
-										} catch (IOException ex1) {
-											System.out.println("Error reading file");
-											ex1.printStackTrace();
-										} catch (SQLException ex2) {
-											System.out.println("Database error");
-											ex2.printStackTrace();
+										for (int j = 0; j < colName_Array.length; j++) {
+											y1 = (String) Array.get(colName_Array, j);
+											Double diemCell = (Double) cell.getNumericCellValue();
+											System.out.println("Mã HS_Lop: " + y1+"/ Điểm: "+diemCell+"/ IDLopHS:"+ y1+"/ IDDauDiem:"+ x);
+											Drepo.insertDiemIntoExcel(diemCell, y1.trim(), x.trim(), idglm);
 										}
+										
+										
 									}
+							}else {
+//							if(list1.size()==0){
+								System.out.println("--------------------------------BẮT ĐẦU THÊM MỚI----------------------------------------");
+								
+								if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
+									String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
+									List<Diem> list = Drepo.HelpMe(z.trim(),x);
+									System.out.println("@-@-@-@-@- Số lg data có với" +x+": "+list.size()+" -@-@-@-@-@");
+									
+									
+									System.out.println("----Insert khi 0 co data-----");
+									System.out.println("Điểm: " + cell);
+									String y1 = "";
+									
+									System.out.println("Đầu điểm: " + x);
+
+									for (int j = 0; j < colName_Array.length; j++) {
+										y1 = (String) Array.get(colName_Array, j);
+										Double diemCell = (Double) cell.getNumericCellValue();
+										System.out.println("Mã HS_Lop: " + y1+"/ Điểm: "+diemCell+"/ IDLopHS:"+ y1+"/ IDDauDiem:"+ x);
+										Drepo.insertDiemIntoExcel(diemCell, y1.trim(), x.trim(), idglm);
+									}
+
+									
 								}
 							}
-
-							System.out.println("------------------------------");
 						}
-					
+						colName_Array = new String[] {};
+					}
+                    
+					System.out.println("------------------------------KẾT THÚC CLASS NÀY-------------------------------------");
+					colName_Array = new String[] {};
 					workbook.close();
 
 				} catch (Exception e) {
@@ -332,12 +311,8 @@ public class DiemExcelController {
 					failedFiles.add(name);
 				}
 			}
-		}
-		model.addAttribute("description", description);
-		model.addAttribute("uploadedFiles", uploadedFiles);
-		model.addAttribute("failedFiles", failedFiles);
-		return "uploadResult";
-	}
+
+	}model.addAttribute("description",description);model.addAttribute("uploadedFiles",uploadedFiles);model.addAttribute("failedFiles",failedFiles);return"uploadResult";}
 
 	@RequestMapping(value = "/GV/InputExcel", method = RequestMethod.POST)
 	public void exportToExcel32(HttpServletResponse response)
@@ -525,12 +500,32 @@ public class DiemExcelController {
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Content-Disposition", "attachment; filename=SampleFile.xlsx");
 
-			Workbook workbook = new XSSFWorkbook();
+			XSSFWorkbook workbook = new XSSFWorkbook();
 
 			CreationHelper createHelper = workbook.getCreationHelper();
 
 			// Create a Sheet
-			Sheet sheet = workbook.createSheet("Employee");
+			
+			XSSFSheet sheet = workbook.createSheet("Sheet 1");
+
+			XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper(sheet);
+			XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint)
+					 dvHelper.createNumericConstraint(
+					   XSSFDataValidationConstraint.ValidationType.DECIMAL,
+					   XSSFDataValidationConstraint.OperatorType.BETWEEN,
+					   "0", "10");
+					
+			CellRangeAddressList addressList = new CellRangeAddressList(1, 200, 1, 12);
+			XSSFDataValidation validation =(XSSFDataValidation)dvHelper.createValidation(dvConstraint, addressList);
+
+			validation.setSuppressDropDownArrow(false);
+
+			validation.setShowErrorBox(true);
+			
+			validation.setErrorStyle(DataValidation.ErrorStyle.STOP);
+			validation.createErrorBox("Lỗi khi nhập điểm!", "Ô nhập điểm chỉ được phép nhập từ 0 đến 10");
+			sheet.addValidationData(validation);
+			
 			List<DauDiem> list = rep.getDauDiemByMon(Idm);
 
 			for (int i = 0; i < list.size(); i++) {
@@ -564,10 +559,11 @@ public class DiemExcelController {
 			// Create a CellStyle with the font
 			CellStyle headerCellStyle = workbook.createCellStyle();
 			headerCellStyle.setFont(headerFont);
-
+//            headerCellStyle.setLocked(false);
+            
 			// Create a Row
 			Row headerRow = sheet.createRow(0);
-
+            sheet.protectSheet("Sheet1");
 			// Create cells
 			for (int i = 0; i < odd_Array.length; i++) {
 				Cell cell = headerRow.createCell(i);
@@ -584,14 +580,24 @@ public class DiemExcelController {
 
 			List<Lop_hs> diemlist = hslrepo.getHS(tenLop);
 			for (Lop_hs diem : diemlist) {
+
+				
 				Row row = sheet.createRow(rowNum++);
+				CellStyle RowCellStyle = workbook.createCellStyle();
+				RowCellStyle.setLocked(false);
+				
+				for (int i = 0; i < odd_Array.length; i++) {
 
+					row.createCell(i).setCellStyle(RowCellStyle);
+				}
+				
 				row.createCell(0).setCellValue(diem.getIdhs().getTenhocsinh() + " - " + diem.getIdLopHs());
-
-//				row.createCell(1).setCellValue(diem.getIdLopc().getTenlop());
-
 			}
 
+			sheet = workbook.getSheetAt(0);
+			
+			
+			
 			// Resize all columns to fit the content size
 			for (int i = 0; i < odd_Array.length; i++) {
 				sheet.autoSizeColumn(i);
@@ -607,7 +613,7 @@ public class DiemExcelController {
 
 			// Closing the workbook
 			workbook.close();
-
+            odd_Array = new String[] {"Họ và tên"};
 		} catch (final Exception e) {
 
 		}

@@ -22,6 +22,8 @@ public interface DiemRepository extends JpaRepository<Diem, Integer>{
 	    		"where tenlop=:tenlop",nativeQuery = true)
 	 List<Diem>findDiemLop(@Param("tenlop")String tenlop);
 	 
+	 @Query(value="select * from lop_hs inner join diem on lop_hs.idlophs = diem.idlophs where idlop=:lop and idhocsinh=:idlhs",nativeQuery = true)
+	 List<Diem>findDiemById(@Param("lop")String lop,@Param("idlhs")String idlhs);
 	 
 	 @Query(value="select * from Diem inner join Lop_HS on Diem.IDLopHS = Lop_HS.IDLopHS\r\n" + 
 	 		"					inner join DauDiem on Diem.IDDauDiem = DauDiem.IDDauDiem\r\n" + 
@@ -29,11 +31,19 @@ public interface DiemRepository extends JpaRepository<Diem, Integer>{
 	 List<Diem> getAll();
 	 
 	 
-	 @Query(value="select * from diem where idlophs=:lophs",nativeQuery = true)
-	 List<Diem> findAllByLopHS(@Param("lophs")String lophs);
+	 @Query(value="select * from Diem inner join Lop_HS on Diem.IDLopHS = Lop_HS.IDLopHS\r\n" + 
+		 		"					inner join DauDiem on Diem.IDDauDiem = DauDiem.IDDauDiem\r\n" + 
+		 		"                    inner join GV_Lop_Mon on Diem.IDGV_L_M = GV_Lop_Mon.IDGV_L_M where Lop_HS.IDLopHS=:lophs and Diem.IDDauDiem=:iddaudiem",nativeQuery = true)
+	 List<Diem> HelpMe(@Param("lophs")String lophs,@Param("iddaudiem")String iddaudiem);
 	 
 	 @Modifying
 	 @Transactional
-	 @Query(value="delete from diem where idlophs=:lophs",nativeQuery = true)
-	 void deleteAllByLopHS(@Param("lophs")String lophs);
+	 @Query(value="delete from diem where idlophs =:lophs and IDDauDiem >=:ddiem",nativeQuery = true)
+	 void deleteAllByLopHS(@Param("lophs")String lophs, @Param("ddiem")String ddiem);
+	 
+	 @Modifying
+	 @Query(value="INSERT INTO diem (diem,trangthai,IDLopHS,IDDauDiem,IDGV_L_M) values(:diemso,0,:lophs,:ddiem,:idglm);",nativeQuery = true)
+	 @org.springframework.transaction.annotation.Transactional
+	
+	 void insertDiemIntoExcel(@Param("diemso")Double diemso,@Param("lophs")String lophs, @Param("ddiem")String ddiem,  @Param("idglm")Integer idglm);
 }
