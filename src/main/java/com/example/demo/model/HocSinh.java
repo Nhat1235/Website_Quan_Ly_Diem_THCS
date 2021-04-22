@@ -23,6 +23,7 @@ public class HocSinh {
 	private Integer idHocsinh;
 	
 	private String tenhocsinh;
+	private String anhHS;
 	
 	@OneToMany(mappedBy = "idhs")
 	private Collection<Lop_hs> lop_hs;
@@ -39,6 +40,14 @@ public class HocSinh {
 	
 	
 	
+	public String getAnhHS() {
+		return anhHS;
+	}
+
+	public void setAnhHS(String anhHS) {
+		this.anhHS = anhHS;
+	}
+
 	public HocSinh() {
 	}
 

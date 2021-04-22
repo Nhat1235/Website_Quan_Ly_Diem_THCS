@@ -25,6 +25,12 @@ public interface DiemRepository extends JpaRepository<Diem, Integer>{
 	 @Query(value="select * from lop_hs inner join diem on lop_hs.idlophs = diem.idlophs where idlop=:lop and idhocsinh=:idlhs",nativeQuery = true)
 	 List<Diem>findDiemById(@Param("lop")String lop,@Param("idlhs")String idlhs);
 	 
+	 @Query(value="select * from diem inner join lop_hs inner join lop on lop_hs.idlop = lop.idlop inner join hocsinh on lop_hs.idhocsinh = hocsinh.idhocsinh on diem.IdlopHS = lop_hs.idlophs \r\n" + 
+	 		"inner join daudiem on diem.iddaudiem = daudiem.iddaudiem \r\n" + 
+	 		"inner join GV_lop_mon inner join giaovien on GV_lop_mon.idGV = giaovien.idGV inner join Mon on GV_lop_mon.idmon = mon.idmon on diem.idgv_l_m = GV_lop_mon.idgv_l_m where GV_lop_mon.idmon=:idmon and lop_hs.idhocsinh=:idhs" 
+,nativeQuery = true)
+	 List<Diem>findDiemByIdHSIdMon(@Param("idmon")String idmon,@Param("idhs")String idhs);
+	 
 	 @Query(value="select * from Diem inner join Lop_HS on Diem.IDLopHS = Lop_HS.IDLopHS\r\n" + 
 	 		"					inner join DauDiem on Diem.IDDauDiem = DauDiem.IDDauDiem\r\n" + 
 	 		"                    inner join GV_Lop_Mon on Diem.IDGV_L_M = GV_Lop_Mon.IDGV_L_M",nativeQuery = true)

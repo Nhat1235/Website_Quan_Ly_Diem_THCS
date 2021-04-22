@@ -227,18 +227,19 @@ public class ShowLopDangDayController {
 		List<Diem> diemlist = DRepo.findDiemLop(lop);
 
 		List<Lop_hs> hsllist = hslrepo.getHS(lop);
+		
 		String tenlp="";
 		for (int i = 0; i < hsllist.size(); i++) {
 			tenlp=hsllist.get(i).getIdLopc().getTenlop();
 		}
 		
-		
-		
 		List<Diem> diemlistByid = new ArrayList<>();
 
 		Map<String, List<Diem>> l = new HashMap();
+		
 		for (int i = 0; i < hsllist.size(); i++) {
 			System.out.println("với id_hs: " + hsllist.get(i).getIdLopHs() + " - Học sinh: " + hsllist.get(i).getIdhs().getTenhocsinh());
+			
 			diemlistByid = DRepo.findDiemById(hsllist.get(i).getIdLopc().getIdlop().toString().trim(),
 					hsllist.get(i).getIdLopHs().toString().trim());
 

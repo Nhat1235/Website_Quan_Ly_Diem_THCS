@@ -18,7 +18,11 @@
 <head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet"
+	th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css}"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
 <link rel="apple-touch-icon" sizes="76x76"
 	th:href="@{~/assets/img/apple-icon.png}">
 <link rel="icon" type="image/png" th:href="@{~/assets/img/favicon.ico}">
@@ -33,7 +37,7 @@
 	th:href="@{https://fonts.googleapis.com/css?family=Montserrat:400,700,200}"
 	rel="stylesheet" />
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+	th:href="@{https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css}" />
 <!-- CSS Files -->
 <link th:href="@{~/assets/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{~/assets/css/light-bootstrap-dashboard.css?v=2.0.0}"
@@ -49,6 +53,68 @@
 	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js" defer></script>
 </head>
 <style>
+.btn-file {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-file input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	font-size: 100px;
+	text-align: right;
+	filter: alpha(opacity = 0);
+	opacity: 0;
+	outline: none;
+	background: white;
+	cursor: inherit;
+	display: block;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-top: 5px;
+	border: 1px solid #888;
+	width: 40%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	/* float: right; */
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 /* Style The Dropdown Button */
 .dropbtn {
   background-color: transparent;
@@ -101,14 +167,18 @@
 </style>
 <script>
 	$(document).ready(function() {
-		$('#table').DataTable({
+		$('#table1').DataTable({
 			/*  "bPaginate": false, */
 			"bLengthChange" : false,
-			"bFilter" : false,
+			"bFilter" : true,
 			"bInfo" : false,
 			"bAutoWidth" : false
 		});
+
 	});
+
+	
+	
 </script>
 <body>
 	<div class="wrapper">
@@ -128,7 +198,7 @@
 				<ul class="nav">
 
 					<li class="nav-item active" th:switch="${tkgv.chucvu}"><a th:case="'GVCN'"
-						class="nav-link" th:href="@{/GV/GVCN}"> <i
+						class="nav-link " th:href="@{/GV/GVCN}"> <i
 							class="nc-icon nc-chart-pie-35"></i>
 							<p>Xem điểm lớp</p>
 					</a></li>
@@ -194,6 +264,8 @@
 					</div>
 				</div>
 			</nav>
+
+
 			<!-- End Navbar -->
 			<div class="content">
 				<div class="container-fluid">
@@ -205,86 +277,104 @@
 										<img class="banner" th:src="@{~/image/banner.jpg}"
 											style="height: 200px; margin: 10px" alt="">
 									</div>
-                                    <div class="row" style="margin-left:2.4px; margin: 10px">
-									<h4 class="card-title">Xem điểm lớp <a th:text="${lop}"></a>&nbsp</h4>
-									<h4 class="card-title" th:each="list1 : ${list}"> của giáo viên <a th:text="${list1.IDGV.ten}"></a> làm <a th:text="${list1.IDGV.chucvu}"></a></h4>
-									</div>
-									<p style="margin-left: 2.4px" class="card-category" >
-										<span th:each="kh1:${khoahoc1}"> Khóa học 
-										<span style="color: red" th:if="${kh1.Nam}" th:text="${kh1.Nam}">
-										</span>
-						
-										</span>
-									</p>
+
+									<h4 class="card-title">
+										Bảng điểm của học sinh <a th:text="${tenhs}"></a>
+									</h4>
+									<!-- <p class="card-category">
+										Bảng điểm của học sinh <a th:text="${tenhs}"></a>
+									</p> -->
 								</div>
-								</div>
-								<div class="card">
-								<div style="margin:10px"><i class="fa fa-files-o" aria-hidden="true"></i>&nbsp&nbsp<span>Bộ lọc</span></div>
-                                	
-                                	
-									<form class="form-row" style="margin: 20px" th:action="@{/GV/GVCN/findKH}">
-								<div class="input-group form-group col-md-6">
-									<a class="input-group-prepend" style="display: inline-block">Khóa Học &nbsp </a>
-										    <select th:name="cbb" class="custom-select" style="width: 50px !important; min-width: 250px; max-width: 250px;">
-											<option th:name="cbb"  th:value="1" selected hidden>Chọn khóa học</option>
-											<option th:name="cbb"  th:each="i : ${kh}" th:value="${i.IdKhoaHoc}" th:text="${i.Nam}"></option>
-										         </select>&nbsp 
-									</div>	
-									<div class="input-group form-group col-md-6">    
-									<a class="input-group-prepend" style="display: inline-block;width: 140px; text-align: right;">Học Kỳ &nbsp </a>    
-										      <select th:name="cbb2" class="custom-select" style="width: 50px !important; min-width: 250px; max-width: 250px;">
-										      <option th:name="cbb2"  th:value="1" selected hidden>Chọn học kỳ</option>
-											<option th:name="cbb2" th:each="ii : ${hk}" th:value="${ii.idhocky}" th:text="${ii.tenhocky}"></option>
-										         </select>&nbsp
-									</div>	
-									<div style="margin-left: 40%">
-									<input type="submit" class="btn btn-success" value="Tìm kiếm" />
-									</div>         
-										     
-									</form>
-                                    
-                                    
-                                    </div> 
-                                    <div class="card ">
-                                    <div class="card-body table-full-width table-responsive" style="margin: 5px">
-									<table id="table" class="table table-hover">
+
+
+
+								<div style="margin: 10px">
+
+									<!-- <h2>Modal Example</h2> -->
+
+									
+
+									<!-- The Modal -->
+									<!-- <div id="myModal" class="modal" onclose="demo.showNotification('top','right')">
+
+										Modal content
+										<div class="modal-content">
+										    <table>
+										     <tr>
+										     <td><h4>Chọn file excel:</h4></td>
+										     <td><span class="close" style="margin-left: 98%">&times;</span></td>
+										     </tr>
+										    </table>
+											<form th:object="${myUploadForm}" method="POST" th:action="@{/GV/uploadOneFile/{idglm} (idglm=${idGVLM})}"
+												enctype="multipart/form-data">
+												<span class=""> 
+												<input th:field="*{fileDatas}" type="file" /></span><br> 
+												
+												<hr/>
+												<input style="float: right;" class="btn btn-success" type="submit" value="Upload Excel" >
+                                                
+
+											</form>
+											
+										</div>
+                                             
+  							
+									
+									</div> -->
+									<!-- <div style="margin: 9px">
+									Trigger/Open The Modal
+									Thêm điểm bằng Excel:<br>
+									<button id="myBtn" class="btn btn-success">Thêm File Excel</button>
+									<a class="btn btn-info" th:href="@{/GV/SampleFile/{idMon}/{tenlop} (idMon=${idM} , tenlop=${tenlp})}">Excel mẫu</a>
+
+									</div> -->
+									<table id="table1"
+										class="display table table-striped dt-responsive"
+										style="width: 100%">
 										<thead class="bg-primary">
 											<tr>
-												<!-- <th>Id lớp</th> -->
-												<th style="color: white">Ảnh</th>
-												<th style="color: white">Họ và Tên</th>
-												<th style="color: white">Xem điểm chi tiết</th>
+												<th style="color: white">Môn</th>
+												<th style="color: white" th:each="diemlist:${diemlistByid}"
+													th:text="*{diemlist.IDDauDiem.loaiDauDiem}"></th>
 											</tr>
 										</thead>
-										<tbody th:each="list : ${lophslist}">
-											<tr>
-											     <td><img style="height: 50px" th:src="@{~/image/{anh}(anh=${list.idhs.anhHS})}"></td>
-												<td th:text="*{list.idhs.tenhocsinh}"></td>
-												<td><a class="btn btn-primary" data-toggle="tooltip"
-													data-placement="top" title="Xem điểm chi tiết"
-													th:href="@{/GV/GVCN/show/{lop}/{idM}/{idgvlm}/{idhs} (lop=${lop} , idM=${idM} , idgvlm=${idgvlm}, idhs=${list.idhs.idHocsinh}) }"><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp</td>
+										<tbody>
+
+											<!-- 		<tr th:each="hsllist:${hsllist}">
+												<td th:text="*{hsllist.idhs.tenhocsinh}"></td>
+
+												<td th:each="diemlist:${diemlistByid}"><p
+														style="margin: auto;" th:text="${diemlist.diem}"></p></td>
+											</tr> -->
+
+											<tr th:each="element : ${l}">
+
+												<td th:each="mapEntry : ${element}"><p
+														style="margin: auto;" th:text="${mapEntry.key}"></p></td>
+
+												<td th:each="anews : ${element.value}">
+													<p style="margin: auto;" th:text="${anews.diem}"></p>
+												</td>
+
 											</tr>
+
+
+
 										</tbody>
 										<tfoot>
 
 										</tfoot>
 									</table>
 								</div>
-							</div>
+
+
 							</div>
 						</div>
 					</div>
-
-			</div>
-			<footer class="footer">
-				<div class="container-fluid">
-					<nav>
-					</nav>
 				</div>
-			</footer>
+			</div>
 		</div>
 	</div>
-	
 </body>
 <!--   Core JS Files   -->
 <script th:src="@{~/assets/js/core/jquery.3.2.1.min.js}"
@@ -307,5 +397,32 @@
 	type="text/javascript"></script>
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
 <script th:src="@{~/assets/js/demo.js}"></script>
+<script>
+	// Get the modal
+	var modal = document.getElementById("myModal");
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks the button, open the modal 
+	btn.onclick = function() {
+		modal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+</script>
 
 </html>

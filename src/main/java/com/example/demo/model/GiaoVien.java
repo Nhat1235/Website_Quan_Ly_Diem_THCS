@@ -17,6 +17,16 @@ public class GiaoVien {
 	private Integer IdGv;
 	private String ten;
 	private String chucvu;
+    private String anhGV;
+    
+    
+	public String getAnhGV() {
+		return anhGV;
+	}
+
+	public void setAnhGV(String anhGV) {
+		this.anhGV = anhGV;
+	}
 
 	public Integer getIdGv() {
 		return IdGv;

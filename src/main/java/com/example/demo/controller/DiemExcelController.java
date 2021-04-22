@@ -24,6 +24,7 @@ import org.apache.poi.hssf.usermodel.HSSFDataValidation;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CellType;
@@ -70,6 +71,7 @@ import com.example.demo.repositories.TaiKhoanGvRepository;
 public class DiemExcelController {
 	private static final String SAMPLE_XLSX_FILE_PATH = "./employee1.xlsx";
 	private static String[] odd_Array = { "Họ và tên" };
+	private static String[] odd_Array_Diem = {};
 	private static String[] header_Array = {};
 	private static String[] colName_Array = {};
 
@@ -96,6 +98,7 @@ public class DiemExcelController {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private String doUpload(HttpServletRequest request, Model model, //
 			MyUploadForm myUploadForm, Integer idglm) {
 
@@ -200,109 +203,125 @@ public class DiemExcelController {
 
 								// Convert the Arraylist back to array
 								header_Array = oddlist.toArray(header_Array);
-								
+
 							}
+							// check null:
+							if (cell.getCellTypeEnum() == CellType.BLANK) {
+								System.out.println("Blank cell!");
+								model.addAttribute("message", "Không được để trống điểm!");
+							} else {
 
-							String y = "";
+								System.out.println("Dạng " + cell.getCellTypeEnum());
 
-							
-							// lấy cột họ tên
-							if (cell.getColumnIndex() == 0 && cell.getRowIndex() > 0) {
+								String y = "";
 
-								String[] splitString2 = cell.toString().split("-");
+								// lấy cột họ tên
+								if (cell.getColumnIndex() == 0 && cell.getRowIndex() > 0) {
 
-								List<String> oddlist = new ArrayList<String>(Arrays.asList(colName_Array));
-								// Add the new element
-								oddlist.add(splitString2[1].trim());
+									String[] splitString2 = cell.toString().split("-");
 
-								// Convert the Arraylist back to array
-								colName_Array = oddlist.toArray(colName_Array);
-								
-								System.out.println(colName_Array.length);
-								
-								for (int j = 0; j < colName_Array.length; j++) {
-									y = (String) Array.get(colName_Array, j);
-									 System.out.println("idhs: "+y);
+									List<String> oddlist = new ArrayList<String>(Arrays.asList(colName_Array));
+									// Add the new element
+									oddlist.add(splitString2[1].trim());
+
+									// Convert the Arraylist back to array
+									colName_Array = oddlist.toArray(colName_Array);
+
+									System.out.println(colName_Array.length);
+
+									for (int j = 0; j < colName_Array.length; j++) {
+										y = (String) Array.get(colName_Array, j);
+										System.out.println("idhs: " + y);
+									}
+
+									System.out.println(
+											"------------------------------KẾT THÚC THÊM ĐẦU ĐIỂM VÀO ARRAY--------------------------");
+								} // e
+
+								String z = "";
+
+								List<Diem> list1 = new ArrayList<>();
+								if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
+
+									for (int j = 0; j < colName_Array.length; j++) {
+										z = (String) Array.get(colName_Array, j);
+									}
+									String idlophs = z.trim();
+									String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
+
+									list1 = Drepo.HelpMe(idlophs, x);
+									System.out.println("Số lg data có với đầu điểm " + x + ": " + list1.size()
+											+ " idHocSinh: " + z);
 								}
 
-								System.out.println("------------------------------KẾT THÚC THÊM ĐẦU ĐIỂM VÀO ARRAY--------------------------");
-							} // e
+								// begin
+								if (list1.size() > 0) {
+									String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
+									System.out.println("-------------Delete data đầu điểm " + x + "-----------");
 
-							String z = "";
-							
-							List<Diem> list1 = new ArrayList<>();
-							if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
-
-								for (int j = 0; j < colName_Array.length; j++) {
-									z = (String) Array.get(colName_Array, j);
-								}
-							    String idlophs = z.trim();
-							    String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
-
-								
-							    list1 = Drepo.HelpMe(idlophs,x);
-								System.out.println("Số lg data có với đầu điểm "+x+": "+list1.size()+" idHocSinh: "+z);
-							}
-							
-							//begin
-							if (list1.size() > 0) {
-								String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
-								System.out.println("-------------Delete data đầu điểm "+x+"-----------");
-								
 									Drepo.deleteAllByLopHS(z.trim(), x.trim());
 
 									if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
-										
-										List<Diem> list = Drepo.HelpMe(z.trim(),x);
-										System.out.println("@@@@@@@@@@ Số lg data có với " +x+": "+list.size()+" @@@@@@@@");
-										
-										
+
+										List<Diem> list = Drepo.HelpMe(z.trim(), x);
+										System.out.println(
+												"@@@@@@@@@@ Số lg data có với " + x + ": " + list.size() + " @@@@@@@@");
+
 										System.out.println("----Update khi co data-----");
 										System.out.println("Điểm: " + cell);
+
 										String y1 = "";
-										
+
 										System.out.println("Đầu điểm: " + x);
 
 										for (int j = 0; j < colName_Array.length; j++) {
 											y1 = (String) Array.get(colName_Array, j);
 											Double diemCell = (Double) cell.getNumericCellValue();
-											System.out.println("Mã HS_Lop: " + y1+"/ Điểm: "+diemCell+"/ IDLopHS:"+ y1+"/ IDDauDiem:"+ x);
+
+											System.out.println("Mã HS_Lop: " + y1 + "/ Điểm: " + diemCell + "/ IDLopHS:"
+													+ y1 + "/ IDDauDiem:" + x);
 											Drepo.insertDiemIntoExcel(diemCell, y1.trim(), x.trim(), idglm);
+
 										}
-										
-										
+
 									}
-							}else {
+								} else {
 //							if(list1.size()==0){
-								System.out.println("--------------------------------BẮT ĐẦU THÊM MỚI----------------------------------------");
-								
-								if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
-									String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
-									List<Diem> list = Drepo.HelpMe(z.trim(),x);
-									System.out.println("@-@-@-@-@- Số lg data có với" +x+": "+list.size()+" -@-@-@-@-@");
-									
-									
-									System.out.println("----Insert khi 0 co data-----");
-									System.out.println("Điểm: " + cell);
-									String y1 = "";
-									
-									System.out.println("Đầu điểm: " + x);
+									System.out.println(
+											"--------------------------------BẮT ĐẦU THÊM MỚI----------------------------------------");
 
-									for (int j = 0; j < colName_Array.length; j++) {
-										y1 = (String) Array.get(colName_Array, j);
-										Double diemCell = (Double) cell.getNumericCellValue();
-										System.out.println("Mã HS_Lop: " + y1+"/ Điểm: "+diemCell+"/ IDLopHS:"+ y1+"/ IDDauDiem:"+ x);
-										Drepo.insertDiemIntoExcel(diemCell, y1.trim(), x.trim(), idglm);
+									if (cell.getColumnIndex() > 0 && cell.getRowIndex() > 0) {
+
+										String x = (String) Array.get(header_Array, cell.getColumnIndex() - 1);
+										List<Diem> list = Drepo.HelpMe(z.trim(), x);
+										System.out.println("@-@-@-@-@- Số lg data có với " + x + ": " + list.size()
+												+ " -@-@-@-@-@");
+
+										System.out.println("----Insert khi 0 co data-----");
+										System.out.println("Điểm: " + cell);
+
+										String y1 = "";
+
+										System.out.println("Đầu điểm: " + x);
+
+										for (int j = 0; j < colName_Array.length; j++) {
+											y1 = (String) Array.get(colName_Array, j);
+											Double diemCell = (Double) cell.getNumericCellValue();
+											System.out.println("Mã HS_Lop: " + y1 + "/ Điểm: " + diemCell + "/ IDLopHS:"
+													+ y1 + "/ IDDauDiem:" + x);
+											Drepo.insertDiemIntoExcel(diemCell, y1.trim(), x.trim(), idglm);
+
+										}
+
 									}
-
-									
 								}
 							}
 						}
 						colName_Array = new String[] {};
 					}
-                    
-					System.out.println("------------------------------KẾT THÚC CLASS NÀY-------------------------------------");
+
+					System.out.println(
+							"------------------------------KẾT THÚC CLASS NÀY-------------------------------------");
 					colName_Array = new String[] {};
 					workbook.close();
 
@@ -312,7 +331,13 @@ public class DiemExcelController {
 				}
 			}
 
-	}model.addAttribute("description",description);model.addAttribute("uploadedFiles",uploadedFiles);model.addAttribute("failedFiles",failedFiles);return"uploadResult";}
+		}
+		model.addAttribute("description", description);
+		model.addAttribute("uploadedFiles", uploadedFiles);
+		model.addAttribute("failedFiles", failedFiles);
+
+		return "uploadResult";
+	}
 
 	@RequestMapping(value = "/GV/InputExcel", method = RequestMethod.POST)
 	public void exportToExcel32(HttpServletResponse response)
@@ -491,6 +516,163 @@ public class DiemExcelController {
 
 	}
 
+	@GetMapping("/GV/SampleFileWithData/{idMon}/{tenLop}/{lop}/{idlhs}")
+
+	public void exportToExcel32(HttpServletResponse response, HttpServletRequest request,
+			@PathVariable("idMon") Integer Idm, @PathVariable("tenLop") String tenLop,
+			@PathVariable("lop") String idlop, @PathVariable("idlhs") String idlhs) throws IOException {
+
+		try {
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-Disposition", "attachment; filename=SampleFile.xlsx");
+
+			XSSFWorkbook workbook = new XSSFWorkbook();
+
+			CreationHelper createHelper = workbook.getCreationHelper();
+
+			// Create a Sheet
+
+			XSSFSheet sheet = workbook.createSheet("Sheet 1");
+
+			XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper(sheet);
+			XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint) dvHelper.createNumericConstraint(
+					XSSFDataValidationConstraint.ValidationType.DECIMAL,
+					XSSFDataValidationConstraint.OperatorType.BETWEEN, "0", "10");
+
+			CellRangeAddressList addressList = new CellRangeAddressList(1, 200, 1, 12);
+			XSSFDataValidation validation = (XSSFDataValidation) dvHelper.createValidation(dvConstraint, addressList);
+
+			validation.setSuppressDropDownArrow(false);
+
+			validation.setShowErrorBox(true);
+
+			validation.setErrorStyle(DataValidation.ErrorStyle.STOP);
+			validation.createErrorBox("Lỗi khi nhập điểm!", "Ô nhập điểm chỉ được phép nhập từ 0 đến 10");
+			sheet.addValidationData(validation);
+
+			List<DauDiem> list = rep.getDauDiemByMon(Idm);
+
+			for (int i = 0; i < list.size(); i++) {
+				list.get(i).getLoaiDauDiem();
+				list.get(i).getIdDauDiem();
+				// display the original array
+				System.out.println("Original Array:" + Arrays.toString(odd_Array));
+
+				// element to be added
+				String val = list.get(i).getLoaiDauDiem() + " - " + list.get(i).getIdDauDiem();
+
+				// convert array to Arraylist
+				List<String> oddlist = new ArrayList<String>(Arrays.asList(odd_Array));
+
+				// Add the new element
+				oddlist.add(val);
+
+				// Convert the Arraylist back to array
+				odd_Array = oddlist.toArray(odd_Array);
+
+				// display the updated array
+				System.out.println("\nArray after adding element " + val + ":" + Arrays.toString(odd_Array));
+			}
+
+			// Create a Font for styling header cells
+			Font headerFont = workbook.createFont();
+			headerFont.setBold(true);
+			headerFont.setFontHeightInPoints((short) 14);
+			headerFont.setColor(IndexedColors.RED.getIndex());
+
+			// Create a CellStyle with the font
+			CellStyle headerCellStyle = workbook.createCellStyle();
+			headerCellStyle.setFont(headerFont);
+			headerCellStyle.setLocked(true);
+			headerCellStyle.setBorderBottom(BorderStyle.THIN);
+			headerCellStyle.setBorderLeft(BorderStyle.THIN);
+//            headerCellStyle.setLocked(false);
+
+			// Create a Row
+			Row headerRow = sheet.createRow(0);
+//			sheet.protectSheet("Sheet1");
+			// Create cells
+			for (int i = 0; i < odd_Array.length; i++) {
+				Cell cell = headerRow.createCell(i);
+				cell.setCellValue(odd_Array[i]);
+				cell.setCellStyle(headerCellStyle);
+			}
+			
+			
+			
+			int rowNum = 1;
+			String diem1 = "";
+			List<Lop_hs> diemlist = hslrepo.getHS(tenLop);
+			for (int k=0; k < diemlist.size();k++) {
+			// Create Other rows and cells with employees data
+			
+			List<Diem> diemlistByid = Drepo.findDiemById(idlop, diemlist.get(k).getIdLopHs().toString());
+			
+			
+			
+			for (int j = 0; j < diemlistByid.size(); j++) {
+
+				diem1 = diemlistByid.get(j).getDiem().toString();
+				List<String> oddlist2 = new ArrayList<String>(Arrays.asList(odd_Array_Diem));
+
+				// Add the new element
+				oddlist2.add(diem1);
+
+				// Convert the Arraylist back to array
+				odd_Array_Diem = oddlist2.toArray(odd_Array_Diem);
+				System.out.println(diemlistByid.get(j).getIdDiem() + " - " + diem1+" - "+diemlist.get(k).getIdLopHs());
+				System.out.println("\nArray Diem after adding element " + diem1 + ":" + Arrays.toString(odd_Array_Diem));
+			}
+
+
+				Row row = sheet.createRow(rowNum++);
+				CellStyle RowCellStyle = workbook.createCellStyle();
+				RowCellStyle.setLocked(false);
+
+				
+
+				for (int i = 0; i < odd_Array_Diem.length; i++) {
+
+					for (int z = 1; z < odd_Array.length; z++) {
+						row.createCell(z).setCellValue(odd_Array_Diem[i]);
+						
+					}
+				}
+				
+//				for (int i = 0; i < odd_Array.length; i++) {
+//					row.createCell(i).setCellStyle(RowCellStyle);
+//				}
+				row.createCell(0).setCellValue(diemlist.get(k).getIdhs().getTenhocsinh() + " - " + diemlist.get(k).getIdLopHs());
+
+			}
+
+			
+			
+			
+			sheet = workbook.getSheetAt(0);
+
+			// Resize all columns to fit the content size
+			for (int i = 0; i < odd_Array.length; i++) {
+				sheet.autoSizeColumn(i);
+			
+			}
+
+			// Write the output to a file
+			FileOutputStream fileOut = new FileOutputStream("SampleExcel.xlsx");
+			workbook.write(fileOut);
+			workbook.write(response.getOutputStream());
+
+			workbook.close();
+			fileOut.close();
+
+			// Closing the workbook
+			workbook.close();
+			odd_Array = new String[] { "Họ và tên" };
+		} catch (final Exception e) {
+
+		}
+	}
+
 	@GetMapping("/GV/SampleFile/{idMon}/{tenLop}")
 
 	public void exportToExcel3(HttpServletResponse response, HttpServletRequest request,
@@ -505,27 +687,25 @@ public class DiemExcelController {
 			CreationHelper createHelper = workbook.getCreationHelper();
 
 			// Create a Sheet
-			
+
 			XSSFSheet sheet = workbook.createSheet("Sheet 1");
 
 			XSSFDataValidationHelper dvHelper = new XSSFDataValidationHelper(sheet);
-			XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint)
-					 dvHelper.createNumericConstraint(
-					   XSSFDataValidationConstraint.ValidationType.DECIMAL,
-					   XSSFDataValidationConstraint.OperatorType.BETWEEN,
-					   "0", "10");
-					
+			XSSFDataValidationConstraint dvConstraint = (XSSFDataValidationConstraint) dvHelper.createNumericConstraint(
+					XSSFDataValidationConstraint.ValidationType.DECIMAL,
+					XSSFDataValidationConstraint.OperatorType.BETWEEN, "0", "10");
+
 			CellRangeAddressList addressList = new CellRangeAddressList(1, 200, 1, 12);
-			XSSFDataValidation validation =(XSSFDataValidation)dvHelper.createValidation(dvConstraint, addressList);
+			XSSFDataValidation validation = (XSSFDataValidation) dvHelper.createValidation(dvConstraint, addressList);
 
 			validation.setSuppressDropDownArrow(false);
 
 			validation.setShowErrorBox(true);
-			
+
 			validation.setErrorStyle(DataValidation.ErrorStyle.STOP);
 			validation.createErrorBox("Lỗi khi nhập điểm!", "Ô nhập điểm chỉ được phép nhập từ 0 đến 10");
 			sheet.addValidationData(validation);
-			
+
 			List<DauDiem> list = rep.getDauDiemByMon(Idm);
 
 			for (int i = 0; i < list.size(); i++) {
@@ -560,10 +740,10 @@ public class DiemExcelController {
 			CellStyle headerCellStyle = workbook.createCellStyle();
 			headerCellStyle.setFont(headerFont);
 //            headerCellStyle.setLocked(false);
-            
+
 			// Create a Row
 			Row headerRow = sheet.createRow(0);
-            sheet.protectSheet("Sheet1");
+			sheet.protectSheet("Sheet1");
 			// Create cells
 			for (int i = 0; i < odd_Array.length; i++) {
 				Cell cell = headerRow.createCell(i);
@@ -581,23 +761,20 @@ public class DiemExcelController {
 			List<Lop_hs> diemlist = hslrepo.getHS(tenLop);
 			for (Lop_hs diem : diemlist) {
 
-				
 				Row row = sheet.createRow(rowNum++);
 				CellStyle RowCellStyle = workbook.createCellStyle();
 				RowCellStyle.setLocked(false);
-				
-				for (int i = 0; i < odd_Array.length; i++) {
 
+				for (int i = 0; i < odd_Array.length; i++) {
+//					List<Diem> diemlistByid = Drepo.findDiemById();
 					row.createCell(i).setCellStyle(RowCellStyle);
 				}
-				
+
 				row.createCell(0).setCellValue(diem.getIdhs().getTenhocsinh() + " - " + diem.getIdLopHs());
 			}
 
 			sheet = workbook.getSheetAt(0);
-			
-			
-			
+
 			// Resize all columns to fit the content size
 			for (int i = 0; i < odd_Array.length; i++) {
 				sheet.autoSizeColumn(i);
@@ -613,7 +790,7 @@ public class DiemExcelController {
 
 			// Closing the workbook
 			workbook.close();
-            odd_Array = new String[] {"Họ và tên"};
+			odd_Array = new String[] { "Họ và tên" };
 		} catch (final Exception e) {
 
 		}

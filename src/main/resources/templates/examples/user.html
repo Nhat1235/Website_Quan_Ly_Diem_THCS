@@ -46,6 +46,57 @@
 <script type="text/javascript" charset="utf8"
 	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js" defer></script>
 </head>
+<style>
+/* Style The Dropdown Button */
+.dropbtn {
+  background-color: transparent;
+  color: gray;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  margin-right:20px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #007bff;
+  color:black;
+}
+</style>
 <script>
 	$(document).ready(function() {
 		$('#table').DataTable({
@@ -113,26 +164,25 @@
 		</div>
 		<div class="main-panel">
 			<!-- Navbar -->
-			<nav class="navbar navbar-expand-lg " color-on-scroll="500">
+		<nav class="navbar navbar-expand-lg " color-on-scroll="500">
 				<div class="container-fluid">
 					<span style="color: black" class="navbar-brand" href="#pablo">
 						Website quản lý điểm trường trung học cơ sở Thuần Mỹ - Ba Vì </span>
-
 					<div class="collapse navbar-collapse justify-content-end"
 						id="navigation">
-
 						<ul class="navbar-nav ml-auto">
+							<!--  <li class="nav-item"><a class="nav-link" href="#pablo">
+									<span class="no-icon">Account</span>
+							</a></li> -->
+							<div class="dropdown">
+  <button class="dropbtn">Tài khoản</button>
+  <div class="dropdown-content">
+    <a th:href="@{/}">Thông tin tài khoản</a>
 
-							<li class="nav-item dropdown" style="margin-right: 30px"><a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false"> <span class="no-icon">Tài khoản</span>
-							</a>
-								<div class="dropdown-menu"
-									aria-labelledby="navbarDropdownMenuLink">
-									<a class="dropdown-item" href="/">Thông tin tài khoản</a> 
-									<div class="divider"></div>
-									<a class="dropdown-item" href="/logout" style="color: red">Đăng xuất</a>
-								</div></li> 
-
+    <a style="color:red" th:href="@{/logout}">Đăng xuất</a>
+   
+  </div>
+</div>
 							<li class="nav-item"></li>
 
 						</ul>
