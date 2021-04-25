@@ -15,19 +15,73 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "taikhoanhs")
-@Data
-@Getter
-@Setter
 public class TaiKhoanHs {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Integer id;
-	private String tentk;
-	private String matkhau;
-	private String chucvu;
 	
+	private String tentk;
+	
+	private String matkhau;
+	
+	private String chucvu;
+
+
 	@OneToOne
 	@JoinColumn(name = "IDHocSinh") 
-	private HocSinh hocsinhfk; 
+	private HocSinh hocsinhfk;
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	public String getTentk() {
+		return tentk;
+	}
+
+
+	public void setTentk(String tentk) {
+		this.tentk = tentk;
+	}
+
+
+	public String getMatkhau() {
+		return matkhau;
+	}
+
+
+	public void setMatkhau(String matkhau) {
+		this.matkhau = matkhau;
+	}
+
+
+	public String getChucvu() {
+		return chucvu;
+	}
+
+
+	public void setChucvu(String chucvu) {
+		this.chucvu = chucvu;
+	}
+
+
+	public HocSinh getHocsinhfk() {
+		return hocsinhfk;
+	}
+
+
+	public void setHocsinhfk(HocSinh hocsinhfk) {
+		this.hocsinhfk = hocsinhfk;
+	} 
+	
+	
+	
 }

@@ -31,12 +31,15 @@ public class LopController {
 		
 		//List<Lop> ten = lopService.getAllLop();
 		
+		List<KhoaHoc> listKhoahoc = khoaHocService.getAllKhoaHoc();
+		
 		List<Lop> lop = lopService.getLopKhoaHoc();
 		
 		model.addAttribute("listLop" , lop);
 		
+		model.addAttribute("lop" , new Lop());
 		
-//		model.addAttribute("namkhoahoc" , khoaHocService.getNamKhoaHoc());
+		model.addAttribute("namkhoahoc" , listKhoahoc);
 		
 		return "lop/show";
 		

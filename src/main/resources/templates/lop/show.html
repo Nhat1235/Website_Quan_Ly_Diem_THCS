@@ -1,7 +1,7 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-<!-- ALL JS FILES -->
+ALL JS FILES
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -11,19 +11,19 @@
 <script th:src="@{~/js/popper.min.js}"></script>
 <script th:src="@{~/js/bootstrap.min.js}"></script>
 
-<!-- Basic -->
+Basic
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Bootstrap CSS -->
+Bootstrap CSS
 <link rel="stylesheet" href="../static/css/bootstrap.min.css"
 	th:href="@{/css/bootstrap.min.css}">
-<!-- Site CSS -->
+Site CSS
 <link rel="stylesheet" href="../static/css/style.css"
 	th:href="@{/css/style.css}">
-<!-- Responsive CSS -->
+Responsive CSS
 <link rel="stylesheet" href="../static/css/responsive.css"
 	th:href="@{/css/responsive.css}">
-<!-- Custom CSS -->
+Custom CSS
 <link rel="stylesheet" href="../static/css/custom.css"
 	th:href="@{/css/custom.css}">
 
@@ -32,7 +32,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<!--Data Table-->
+Data Table
 <script type="text/javascript"
 	src=" https://cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
 <script type="text/javascript"
@@ -60,4 +60,406 @@
 		</tbody>
 	</table>
 </body>
+</html> -->
+
+<!--
+=========================================================
+ Light Bootstrap Dashboard - v2.0.1
+=========================================================
+
+ Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard
+ Copyright 2019 Creative Tim (https://www.creative-tim.com)
+ Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE)
+
+ Coded by Creative Tim
+
+=========================================================
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<link rel="apple-touch-icon" sizes="76x76"
+	href="../assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+<title>Website quản lý điểm trường THCS Thuần Mỹ</title>
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+	name='viewport' />
+<!--     Fonts and icons     -->
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
+	rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+<!-- CSS Files -->
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../assets/css/light-bootstrap-dashboard.css?v=2.0.0 "
+	rel="stylesheet" />
+<!-- CSS Just for demo purpose, don't include it in your project -->
+<link href="../assets/css/demo.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js" defer></script>
+</head>
+<style>
+hr.separator {
+	border-top: 1px solid red;
+	content: '';
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+	background-color: transparent;
+	color: gray;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+	margin-right: 20px;
+	position: relative;
+	display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 200px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	right: 0;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+	background-color: #f1f1f1
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+	background-color: #007bff;
+	color: black;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$('#table').DataTable({
+			/*  "bPaginate": false, */
+			"bLengthChange" : false,
+			"bFilter" : false,
+			"bInfo" : false,
+			"bAutoWidth" : false,
+
+		});
+	});
+</script>
+<body>
+	<div class="wrapper">
+		<div class="sidebar" data-image="../assets/img/sidebar-5.jpg"
+			data-color="blue">
+			<!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+			<div class="sidebar-wrapper">
+				<div class="logo">
+					Chào mừng
+					<!-- <br>
+					<a  th:text="*{tkgv.tentk} +' - '+*{tkgv.chucvu}"></a> -->
+				</div>
+				<ul class="nav">
+
+
+					<li><a class="nav-link" th:href="@{/}"> <i
+							class="nc-icon nc-circle-09"></i>
+							<p>Tài khoản</p>
+					</a></li>
+					<li><a class="nav-link" th:href="@{/GV/GVBM}"> <i
+							class="nc-icon nc-notes"></i>
+							<p>Danh sách lớp đang dạy</p>
+					</a></li>
+					<li class="nav-item active"><a class="nav-link" th:href="@{/}">
+							<i class="nc-icon nc-circle-09"></i>
+							<p>Thêm Lớp</p>
+					</a></li>
+					<!-- <li><a class="nav-link" href="./typography.html"> <i
+							class="nc-icon nc-paper-2"></i>
+							<p>Typography</p>
+					</a></li>
+					<li><a class="nav-link" href="./icons.html"> <i
+							class="nc-icon nc-atom"></i>
+							<p>Icons</p>
+					</a></li>
+					<li><a class="nav-link" href="./maps.html"> <i
+							class="nc-icon nc-pin-3"></i>
+							<p>Maps</p>
+					</a></li>
+					<li><a class="nav-link" href="./notifications.html"> <i
+							class="nc-icon nc-bell-55"></i>
+							<p>Notifications</p>
+					</a></li> -->
+
+
+					<!-- 					<li class="nav-item active active-pro"><a
+						class="nav-link active" href="upgrade.html"> <i
+							class="nc-icon nc-alien-33"></i>
+							<p>Upgrade to PRO</p>
+					</a></li> -->
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel">
+			<!-- Navbar -->
+			<nav class="navbar navbar-expand-lg " color-on-scroll="500">
+				<div class="container-fluid">
+					<span style="color: black" class="navbar-brand" href="#pablo">
+						Website quản lý điểm trường trung học cơ sở Thuần Mỹ - Ba Vì </span>
+					<div class="collapse navbar-collapse justify-content-end"
+						id="navigation">
+						<ul class="navbar-nav ml-auto">
+							<!--  <li class="nav-item"><a class="nav-link" href="#pablo">
+									<span class="no-icon">Account</span>
+							</a></li> -->
+							<div class="dropdown">
+								<button class="dropbtn">Tài khoản</button>
+								<div class="dropdown-content">
+									<a th:href="@{/}">Thông tin tài khoản</a> <a style="color: red"
+										th:href="@{/logout}">Đăng xuất</a>
+
+								</div>
+							</div>
+							<li class="nav-item"></li>
+
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card strpied-tabled-with-hover">
+								<div class="card-header ">
+									<div>
+										<img class="banner" th:src="@{~/image/banner.jpg}"
+											style="height: 200px; margin: 10px" alt="">
+									</div>
+
+									<h4 style="margin-top: 10px" class="card-title">Danh sách
+										các tài khoản</h4>
+								</div>
+
+								<br>
+							</div>
+
+							<div class="card ">
+								<div class="card-body table-full-width table-responsive"
+									style="margin: 5px">
+									<form th:action="@{saveLop}" method="POST" th:object="${lop}">
+										<table>
+											<tr>
+												<td>Tên Lớp</td>
+												<td><input th:field="*{tenlop}" type="text" name="nam" /></td>
+											</tr>
+											<tr>
+												<td>Khoá Học</td>
+												<td><select th:field="*{khoahocfk}">
+														<option th:each="id : ${namkhoahoc}"
+															th:value="${id.IdKhoaHoc}" th:text="${id.Nam}" />
+												</select></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><input type="submit" class="btn btn-success"
+													name="add" value="Thêm Lớp"></td>
+											</tr>
+										</table>
+									</form>
+
+									<hr>
+									<br>
+									<table id="table" class="table table-hover">
+										<thead class="bg-primary">
+											<tr>
+												<!-- <th>Id lớp</th> -->
+
+												<th style="color: white">Tên Lớp</th>
+												<th style="color: white">Khoá Học</th>
+												<th style="color: white">Xem Chi Tiết</th>
+												<th style="color: white">Chức Năng</th>
+											</tr>
+										</thead>
+										<tbody th:each="list : ${listLop}">
+											<tr>
+												<td><a th:text="${list.tenlop}"></a></td>
+												<td><a th:text="${list.khoahocfk.nam}"></a></td>
+												<td>Xem</td>
+												<td><a style="color:#87CB16" class="btn btn-success"> Thêm giáo viên</a></td>
+												
+											</tr>
+										</tbody>
+										<tfoot>
+
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<nav>
+						<!-- <ul class="footer-menu">
+							<li><a href="#"> Home </a></li>
+							<li><a href="#"> Company </a></li>
+							<li><a href="#"> Portfolio </a></li>
+							<li><a href="#"> Blog </a></li>
+						</ul> -->
+						<!-- 	<p class="copyright text-center">
+							©
+							<script>
+								document.write(new Date().getFullYear())
+							</script>
+							<a href="http://www.creative-tim.com">Creative Tim</a>, made with
+							love for a better web
+						</p> -->
+					</nav>
+				</div>
+			</footer>
+		</div>
+	</div>
+	<!--   -->
+	<!-- <div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+
+        <ul class="dropdown-menu">
+			<li class="header-title"> Sidebar Style</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger">
+                    <p>Background Image</p>
+                    <label class="switch">
+                        <input type="checkbox" data-toggle="switch" checked="" data-on-color="primary" data-off-color="primary"><span class="toggle"></span>
+                    </label>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger background-color">
+                    <p>Filters</p>
+                    <div class="pull-right">
+                        <span class="badge filter badge-black" data-color="black"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-orange" data-color="orange"></span>
+                        <span class="badge filter badge-red" data-color="red"></span>
+                        <span class="badge filter badge-purple active" data-color="purple"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Sidebar Images</li>
+
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-1.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-3.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="..//assets/img/sidebar-4.jpg" alt="" />
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../assets/img/sidebar-5.jpg" alt="" />
+                </a>
+            </li>
+
+            <li class="button-container">
+                <div class="">
+                    <a href="http://www.creative-tim.com/product/light-bootstrap-dashboard" target="_blank" class="btn btn-info btn-block btn-fill">Download, it's free!</a>
+                </div>
+            </li>
+
+            <li class="header-title pro-title text-center">Want more components?</li>
+
+            <li class="button-container">
+                <div class="">
+                    <a href="http://www.creative-tim.com/product/light-bootstrap-dashboard-pro" target="_blank" class="btn btn-warning btn-block btn-fill">Get The PRO Version!</a>
+                </div>
+            </li>
+
+            <li class="header-title" id="sharrreTitle">Thank you for sharing!</li>
+
+            <li class="button-container">
+				<button id="twitter" class="btn btn-social btn-outline btn-twitter btn-round sharrre"><i class="fa fa-twitter"></i> · 256</button>
+                <button id="facebook" class="btn btn-social btn-outline btn-facebook btn-round sharrre"><i class="fa fa-facebook-square"></i> · 426</button>
+            </li>
+        </ul>
+    </div>
+</div>
+ -->
+</body>
+<!--   Core JS Files   -->
+<script src="../assets/js/core/jquery.3.2.1.min.js"
+	type="text/javascript"></script>
+<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="../assets/js/plugins/bootstrap-switch.js"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!--  Chartist Plugin  -->
+<script src="../assets/js/plugins/chartist.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="../assets/js/plugins/bootstrap-notify.js"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 "
+	type="text/javascript"></script>
+<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<script src="../assets/js/demo.js"></script>
+
+
 </html>
+
