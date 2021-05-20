@@ -122,20 +122,26 @@
 				</div>
 				<ul class="nav">
 					
-					<li th:switch="${tkgv.chucvu}">
-					<a  th:case="'GVCN'" class="nav-link" th:href="@{/GV/GVCN}"> <i class="nc-icon nc-chart-pie-35"></i>
+				<!-- 	<li  th:switch="${tkgv.chucvu}"><a th:case="'GVCN'" class="nav-link" th:href="@{/GV/GVCN}"> <i class="nc-icon nc-chart-pie-35"></i>
 							<p>Xem điểm lớp</p>
-					</a>
-					</li>
+					</a></li> -->
 					<li class="nav-item active"><a class="nav-link" th:href="@{/}"> <i
 							class="nc-icon nc-circle-09"></i>
 							<p>Tài khoản</p>
 					</a></li>
-					<li><a class="nav-link"
-						th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+					<li th:switch="${tkgv.chucvu}"><a class="nav-link" th:case="'GVCN'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
 							<p>Danh sách lớp đang dạy</p>
 					</a></li>
-					
+					<li th:switch="${tkgv.chucvu}"><a class="nav-link" th:case="'GVBM'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+							<p>Danh sách lớp đang dạy</p>
+					</a></li>
+					<li th:switch="${tkgv.chucvu}"><a class="nav-link" th:case="'PDT'"
+						th:href="@{/lop/showLop}"> <i class="fa fa-book" aria-hidden="true"></i>
+							<p>Quản lý lớp</p>
+					</a></li>
+					<li th:switch="${tkgv.chucvu}"><a th:case="'BGH'" class="nav-link" th:href="@{/BGH}"> <i class="fa fa-user"></i>
+							<p>Quản lý tài khoản</p>
+					</a></li>
 					<!-- <li><a class="nav-link" href="./typography.html"> <i
 							class="nc-icon nc-paper-2"></i>
 							<p>Typography</p>
@@ -237,36 +243,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       <!--  <div class="row">
-                                            <div class="col-md-4 pr-1">
-                                                <div class="form-group">
-                                                    <label>City</label>
-                                                    <input type="text" class="form-control" placeholder="City" value="Mike">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 px-1">
-                                                <div class="form-group">
-                                                    <label>Country</label>
-                                                    <input type="text" class="form-control" placeholder="Country" value="Andrew">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 pl-1">
-                                                <div class="form-group">
-                                                    <label>Postal Code</label>
-                                                    <input type="number" class="form-control" placeholder="ZIP Code">
-                                                </div>
-                                            </div>
+                                        <div th:switch="${tkgv.chucvu}">
+                                        <a type="submit" th:case="'GVBM'" th:href="@{/GV/GVBM}" class="btn btn-primary btn-fill pull-left">Xem danh sách các lớp đang dạy</a> 
+                                        <a type="submit" th:case="'GVCN'" th:href="@{/GV/GVBM}" class="btn btn-primary btn-fill pull-left">Xem danh sách các lớp đang dạy</a> 
+                                       
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>About Me</label>
-                                                    <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                        <a type="submit" th:href="@{/GV/GVBM}" class="btn btn-primary btn-fill pull-left">Xem danh sách các lớp đang dạy</a> 
-                                        <div class="clearfix"></div>
                                     </form>
                                 </div>
                             </div>

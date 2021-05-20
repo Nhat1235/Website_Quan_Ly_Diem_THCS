@@ -19,6 +19,7 @@ public class LopService {
 
 	public void save(Lop lop) {
 		lopRepository.save(lop);
+		
 	}
 
 	public List<Lop> getLopKhoaHoc() {

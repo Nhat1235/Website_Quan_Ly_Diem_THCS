@@ -132,43 +132,26 @@ hr.separator {
 				</div>
 				<ul class="nav">
 
-					<li th:switch="${tkgv.chucvu}"><a th:case="'GVCN'"
-						class="nav-link" th:href="@{/GV/GVCN}"> <i
-							class="nc-icon nc-chart-pie-35"></i>
-							<p>Xem điểm lớp</p>
-					</a></li>
+
 					<li><a class="nav-link" th:href="@{/}"> <i
 							class="nc-icon nc-circle-09"></i>
 							<p>Tài khoản</p>
 					</a></li>
-					<li class="nav-item active"><a class="nav-link"
-						th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+					<li th:switch="${tkgv.chucvu}" class="nav-item active"><a class="nav-link" th:case="'GVCN'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
 							<p>Danh sách lớp đang dạy</p>
 					</a></li>
-
-					<!-- <li><a class="nav-link" href="./typography.html"> <i
-							class="nc-icon nc-paper-2"></i>
-							<p>Typography</p>
+					<li th:switch="${tkgv.chucvu}" class="nav-item active"><a class="nav-link" th:case="'GVBM'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+							<p>Danh sách lớp đang dạy</p>
 					</a></li>
-					<li><a class="nav-link" href="./icons.html"> <i
-							class="nc-icon nc-atom"></i>
-							<p>Icons</p>
+					<li th:switch="${tkgv.chucvu}"><a class="nav-link" th:case="'PDT'"
+						th:href="@{/lop/showLop}"> <i class="fa fa-book" aria-hidden="true"></i>
+							<p>Quản lý lớp</p>
 					</a></li>
-					<li><a class="nav-link" href="./maps.html"> <i
-							class="nc-icon nc-pin-3"></i>
-							<p>Maps</p>
+					<li th:switch="${tkgv.chucvu}"><a th:case="'BGH'" class="nav-link" th:href="@{/BGH}"> <i class="fa fa-user"></i>
+							<p>Quản lý tài khoản</p>
 					</a></li>
-					<li><a class="nav-link" href="./notifications.html"> <i
-							class="nc-icon nc-bell-55"></i>
-							<p>Notifications</p>
-					</a></li> -->
+					
 
-
-					<!-- 					<li class="nav-item active active-pro"><a
-						class="nav-link active" href="upgrade.html"> <i
-							class="nc-icon nc-alien-33"></i>
-							<p>Upgrade to PRO</p>
-					</a></li> -->
 				</ul>
 			</div>
 		</div>
@@ -256,6 +239,7 @@ hr.separator {
 												<th style="color: white">Chức vụ</th>
 												<th style="color: white">Môn</th>
 												<th style="color: white">Lớp</th>
+												<th style="color: white">Học Kì</th>
 												<th style="color: white">Chức năng</th>
 											</tr>
 										</thead>
@@ -265,11 +249,14 @@ hr.separator {
 												<td th:text="*{list.IDGV.chucvu}"></td>
 												<td th:text="*{list.IDMon.TenMon}"></td>
 												<td th:text="*{list.IDLop.tenlop}"></td>
-												<td><a class="btn btn-primary" data-toggle="tooltip"
-													data-placement="top" title="Xem điểm"
-													th:href="@{/GVBM/show/{lop}/{idM}/{idGVLM} (lop=${list.IDLop.tenlop} , idM=${list.IDLop.idlop} , idGVLM=${list.IdGv_L_M}) }"><i
-														class="fa fa-eye" aria-hidden="true"></i></a>&nbsp</td>
-
+												<td th:text="*{list.IDHocKy.tenhocky}"></td>
+												<td th:switch="${tkgv.chucvu}"><a class="btn btn-primary" data-toggle="tooltip"
+													data-placement="top" title="Bảng điểm bộ môn của lớp"
+													th:href="@{/GVBM/show/{lop}/{idM}/{idGVLM} (lop=${list.IDLop.tenlop} , idM=${list.IDMon.IdMon} , idGVLM=${list.IdGv_L_M}) }"><i
+														class="fa fa-eye" aria-hidden="true"></i></a>&nbsp
+											    <a th:case="'GVCN'" class="btn btn-primary" data-toggle="tooltip"
+													data-placement="top" title="Bảng điểm chi tiết"
+													th:href="@{/GV/GVCN/{idmon} (idmon=${list.IDMon.IdMon})}"><i class="fa fa-table" aria-hidden="true"></i></a>&nbsp</td>
 											</tr>
 										</tbody>
 										<tfoot>

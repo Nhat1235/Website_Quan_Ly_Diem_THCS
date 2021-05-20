@@ -16,7 +16,7 @@ public class GiaoVienService {
 	GiaoVienRepository giaoVienRepository;
 	
 	public List<GiaoVien> getAllGV(){
-		return giaoVienRepository.findAll();
+		return giaoVienRepository.findGV();
 	}
 	
 	public void save(GiaoVien giaovien) {

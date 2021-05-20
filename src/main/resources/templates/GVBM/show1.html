@@ -166,16 +166,16 @@
 }
 </style>
 <script>
-	$(document).ready(function() {
+/* 	$(document).ready(function() {
 		$('#table1').DataTable({
-			/*  "bPaginate": false, */
+			/*  "bPaginate": false, 
 			"bLengthChange" : false,
 			"bFilter" : true,
 			"bInfo" : false,
 			"bAutoWidth" : false
 		});
 
-	});
+	}); */
 
 	
 	
@@ -197,43 +197,22 @@
 				</div>
 				<ul class="nav">
 
-					<li th:switch="${tkgv.chucvu}"><a th:case="'GVCN'"
-						class="nav-link" th:href="@{/GV/GVCN}"> <i
-							class="nc-icon nc-chart-pie-35"></i>
-							<p>Xem điểm lớp</p>
-					</a></li>
 					<li><a class="nav-link" th:href="@{/}"> <i
 							class="nc-icon nc-circle-09"></i>
 							<p>Tài khoản</p>
 					</a></li>
-					<li class="nav-item active"><a class="nav-link"
-						th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+
+						<li th:switch="${tkgv.chucvu}" class="nav-item active"><a class="nav-link" th:case="'GVCN'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
 							<p>Danh sách lớp đang dạy</p>
 					</a></li>
-
-					<!-- <li><a class="nav-link" href="./typography.html"> <i
-							class="nc-icon nc-paper-2"></i>
-							<p>Typography</p>
+					<li th:switch="${tkgv.chucvu}" class="nav-item active"><a class="nav-link" th:case="'GVBM'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+							<p>Danh sách lớp đang dạy</p>
 					</a></li>
-					<li><a class="nav-link" href="./icons.html"> <i
-							class="nc-icon nc-atom"></i>
-							<p>Icons</p>
+					<li th:switch="${tkgv.chucvu}"><a th:case="'BGH'" class="nav-link" th:href="@{/BGH}"> <i class="fa fa-user"></i>
+							<p>Quản lý tài khoản</p>
 					</a></li>
-					<li><a class="nav-link" href="./maps.html"> <i
-							class="nc-icon nc-pin-3"></i>
-							<p>Maps</p>
-					</a></li>
-					<li><a class="nav-link" href="./notifications.html"> <i
-							class="nc-icon nc-bell-55"></i>
-							<p>Notifications</p>
-					</a></li> -->
+					
 
-
-					<!-- 					<li class="nav-item active active-pro"><a
-						class="nav-link active" href="upgrade.html"> <i
-							class="nc-icon nc-alien-33"></i>
-							<p>Upgrade to PRO</p>
-					</a></li> -->
 				</ul>
 			</div>
 		</div>
@@ -305,11 +284,14 @@
 										     <td><span class="close" style="margin-left: 98%">&times;</span></td>
 										     </tr>
 										    </table>
-											<form th:object="${myUploadForm}" method="POST" th:action="@{/GV/uploadOneFile/{idglm} (idglm=${idGVLM})}"
+										
+										    <form th:object="${myUploadForm}" method="POST" th:action="@{/GV/uploadOneFile/{idglm} (idglm=${idGVLM})}"
 												enctype="multipart/form-data">
-												<span class=""> 
-												<input th:field="*{fileDatas}" type="file" /></span><br> 
-												
+												<span style="margin: 20px"> 
+												<input th:field="*{fileDatas}" type="file" /></span>
+												<span style="margin: 20px"> 
+												<a th:href="@{/GV/SampleFile/{idMon}/{tenlop} (idMon=${idM} , tenlop=${tenlp})}"> <i class="fa fa-download" aria-hidden="true"></i> Tải file mẫu</a>
+											    </span>
 												<hr/>
 												<input style="float: right;" class="btn btn-success" type="submit" value="Upload Excel" >
                                                 
@@ -324,9 +306,9 @@
 									<div style="margin: 9px">
 									<!-- Trigger/Open The Modal -->
 									Thêm điểm bằng Excel:<br>
-									<button id="myBtn" class="btn btn-success">Thêm File Excel</button>
-									<a class="btn btn-info" th:href="@{/GV/SampleFile/{idMon}/{tenlop} (idMon=${idM} , tenlop=${tenlp})}">Excel mẫu</a>
-
+									<button id="myBtn" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Thêm File Excel</button>
+									<a th:href="@{/GV/SampleFileWithData/{idMon}/{tenlop}/{lop}/{idlhs} (idMon=${idM} , tenlop=${tenlp}, lop=${idlhs}, idlhs=${idlhs})}"> <i class="fa fa-download" aria-hidden="true"></i> Excel điểm</a>
+											   
 									</div>
 									<table id="table1"
 										class="display table table-striped dt-responsive"

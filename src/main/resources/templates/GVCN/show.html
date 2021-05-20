@@ -127,43 +127,24 @@
 				</div>
 				<ul class="nav">
 
-					<li class="nav-item active" th:switch="${tkgv.chucvu}"><a th:case="'GVCN'"
-						class="nav-link" th:href="@{/GV/GVCN}"> <i
-							class="nc-icon nc-chart-pie-35"></i>
-							<p>Xem điểm lớp</p>
-					</a></li>
 					<li><a class="nav-link" th:href="@{/}"> <i
 							class="nc-icon nc-circle-09"></i>
 							<p>Tài khoản</p>
 					</a></li>
-					<li><a class="nav-link"
-						th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+					<li th:switch="${tkgv.chucvu}" class="nav-item active"><a class="nav-link" th:case="'GVCN'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
 							<p>Danh sách lớp đang dạy</p>
 					</a></li>
-
-					<!-- <li><a class="nav-link" href="./typography.html"> <i
-							class="nc-icon nc-paper-2"></i>
-							<p>Typography</p>
+					<li th:switch="${tkgv.chucvu}" class="nav-item active"><a class="nav-link" th:case="'GVBM'" th:href="@{/GV/GVBM}"> <i class="nc-icon nc-notes"></i>
+							<p>Danh sách lớp đang dạy</p>
 					</a></li>
-					<li><a class="nav-link" href="./icons.html"> <i
-							class="nc-icon nc-atom"></i>
-							<p>Icons</p>
+					<li th:switch="${tkgv.chucvu}"><a th:case="'PDT'" class="nav-link" th:href="@{/lop/showLop}"> <i class="fa fa-book" aria-hidden="true"></i>
+							<p>Quản lý lớp</p>
 					</a></li>
-					<li><a class="nav-link" href="./maps.html"> <i
-							class="nc-icon nc-pin-3"></i>
-							<p>Maps</p>
+					<li th:switch="${tkgv.chucvu}" class="nav-item active"><a th:case="'BGH'" class="nav-link" th:href="@{/BGH}"> <i class="fa fa-user"></i>
+							<p>Quản lý tài khoản</p>
 					</a></li>
-					<li><a class="nav-link" href="./notifications.html"> <i
-							class="nc-icon nc-bell-55"></i>
-							<p>Notifications</p>
-					</a></li> -->
 
-
-					<!-- 					<li class="nav-item active active-pro"><a
-						class="nav-link active" href="upgrade.html"> <i
-							class="nc-icon nc-alien-33"></i>
-							<p>Upgrade to PRO</p>
-					</a></li> -->
+				
 				</ul>
 			</div>
 		</div>
@@ -206,8 +187,8 @@
 											style="height: 200px; margin: 10px" alt="">
 									</div>
                                     <div class="row" style="margin-left:2.4px; margin: 10px">
-									<h4 class="card-title">Xem điểm lớp <a th:text="${lop}"></a>&nbsp</h4>
-									<h4 class="card-title" th:each="list1 : ${list}"> của giáo viên <a th:text="${list1.IDGV.ten}"></a> làm <a th:text="${list1.IDGV.chucvu}"></a></h4>
+									<h4 class="card-title">Bảng điểm lớp <a th:text="${lop}"></a>&nbsp</h4>
+									<!-- <h4 class="card-title" th:each="list1 : ${list}"> của giáo viên <a th:text="${list1.IDGV.ten}"></a> làm <a th:text="${list1.IDGV.chucvu}"></a></h4> -->
 									</div>
 									<p style="margin-left: 2.4px" class="card-category" >
 										<span th:each="kh1:${khoahoc1}"> Khóa học 
@@ -218,7 +199,7 @@
 									</p>
 								</div>
 								</div>
-								<div class="card">
+								<!-- <div class="card">
 								<div style="margin:10px"><i class="fa fa-files-o" aria-hidden="true"></i>&nbsp&nbsp<span>Bộ lọc</span></div>
                                 	
                                 	
@@ -244,22 +225,25 @@
 									</form>
                                     
                                     
-                                    </div> 
+                                    </div>  -->
                                     <div class="card ">
                                     <div class="card-body table-full-width table-responsive" style="margin: 5px">
-									<table id="table" class="table table-hover">
+									<table id="table" class="table table-hover" th:each="element : ${l}">
 										<thead class="bg-primary">
-											<tr>
+											<tr >
 												<!-- <th>Id lớp</th> -->
 												<th style="color: white">Ảnh</th>
 												<th style="color: white">Họ và Tên</th>
+												<!-- <th th:each="mapEntry : ${element}"><span
+														style="color: white" th:text="${mapEntry.key}"></span></th> -->
 												<th style="color: white">Xem điểm chi tiết</th>
 											</tr>
 										</thead>
-										<tbody th:each="list : ${lophslist}">
+										<tbody  th:each="list : ${lophslist}">
 											<tr>
 											     <td><img style="height: 50px" th:src="@{~/image/{anh}(anh=${list.idhs.anhHS})}"></td>
 												<td th:text="*{list.idhs.tenhocsinh}"></td>
+										
 												<td><a class="btn btn-primary" data-toggle="tooltip"
 													data-placement="top" title="Xem điểm chi tiết"
 													th:href="@{/GV/GVCN/show/{lop}/{idM}/{idgvlm}/{idhs} (lop=${lop} , idM=${idM} , idgvlm=${idgvlm}, idhs=${list.idhs.idHocsinh}) }"><i class="fa fa-eye" aria-hidden="true"></i></a>&nbsp</td>
@@ -269,6 +253,11 @@
 
 										</tfoot>
 									</table>
+									
+									<div>
+									
+									
+									</div>
 								</div>
 							</div>
 							</div>

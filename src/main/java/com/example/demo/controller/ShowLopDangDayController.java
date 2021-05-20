@@ -25,7 +25,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -38,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.demo.helper.MyUploadForm;
 import com.example.demo.model.DauDiem;
@@ -91,8 +94,7 @@ public class ShowLopDangDayController {
 	HocKyRepository hkrepo;
 
 	@RequestMapping("GV/findKH")
-	public String findkh(ModelMap model, @RequestParam("cbb") String keyword, @RequestParam("cbb2") String keyword2,
-			Authentication authentication) {
+	public String findkh(ModelMap model, @RequestParam("cbb") String keyword, @RequestParam("cbb2") String keyword2,Authentication authentication) {
 
 		System.out.println("combobox value: " + keyword + "" + keyword2);
 
@@ -137,6 +139,18 @@ public class ShowLopDangDayController {
 
 	}
 
+	@RequestMapping("/security")
+    public RedirectView security(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Info: "+ auth.getAuthorities());
+        if (auth.getAuthorities().toString().trim().equals("[BGH]"))
+            return new RedirectView("/BGH");
+        if (auth.getAuthorities().toString().trim().equals("[PDT]"))
+            return new RedirectView("/lop/showLop");
+
+        return new RedirectView("/GV/GVBM");
+    }
+	
 	@GetMapping("GV/GVBM")
 	public String slddC(ModelMap model, Authentication authentication) {
 
@@ -229,8 +243,13 @@ public class ShowLopDangDayController {
 		List<Lop_hs> hsllist = hslrepo.getHS(lop);
 		
 		String tenlp="";
+		String idlhs="";
+		String idlop="";
+		
 		for (int i = 0; i < hsllist.size(); i++) {
 			tenlp=hsllist.get(i).getIdLopc().getTenlop();
+			idlop=hsllist.get(i).getIdLopc().getIdlop().toString();
+			idlhs=hsllist.get(i).getIdLopHs().toString();
 		}
 		
 		List<Diem> diemlistByid = new ArrayList<>();
@@ -240,8 +259,7 @@ public class ShowLopDangDayController {
 		for (int i = 0; i < hsllist.size(); i++) {
 			System.out.println("với id_hs: " + hsllist.get(i).getIdLopHs() + " - Học sinh: " + hsllist.get(i).getIdhs().getTenhocsinh());
 			
-			diemlistByid = DRepo.findDiemById(hsllist.get(i).getIdLopc().getIdlop().toString().trim(),
-					hsllist.get(i).getIdLopHs().toString().trim());
+			diemlistByid = DRepo.findDiemById(hsllist.get(i).getIdLopc().getIdlop().toString().trim(),hsllist.get(i).getIdLopHs().toString().trim(),idGVLM.toString().trim());
 
 			for (int j = 0; j < diemlistByid.size(); j++) {
 				l.put(hsllist.get(i).getIdhs().getTenhocsinh(), diemlistByid);
@@ -257,6 +275,8 @@ public class ShowLopDangDayController {
 		List<DauDiem> DDlist = rep.getDauDiemByMon(idM);
 
 		model.addAttribute("tenlp", tenlp);
+		model.addAttribute("idlhs", idlhs);
+		model.addAttribute("idlop", idlop);
 		model.addAttribute("l", l);
 		model.addAttribute("diemlistByid", diemlistByid);
 		model.addAttribute("idGVLM", idGVLM);

@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "taikhoangv")
@@ -21,10 +21,31 @@ public class TaiKhoanGv {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Integer id;
-	@Column(name = "tentk")
+	
+	
+	@Column(name = "tentk", unique = true)
+	/*
+	 * @NotNull(message="*Trường này không được phép trống")
+	 * 
+	 * @Size(min = 5, max = 15, message =
+	 * "*Chỉ được nhập trong khoảng từ 5 đến 15 ký tự")
+	 */
 	private String tentk;
+	
+	/*
+	 * @NotNull(message="*Trường này không được phép trống")
+	 * 
+	 * @Size(min = 8, max = 15, message =
+	 * "*Chỉ được nhập trong khoảng từ 8 đến 15 ký tự")
+	 */
 	@Column(name = "matkhau")
+	
 	private String matkhau;
+	/*
+	 * @NotNull(message="*Trường này không được phép trống")
+	 * 
+	 * @Size( max = 4, message = "*Chỉ được nhập tối đa 4 ký tự")
+	 */
 	@Column(name = "chucvu")
 	private String chucvu;
 	

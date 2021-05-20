@@ -71,7 +71,7 @@ import com.example.demo.repositories.TaiKhoanGvRepository;
 public class DiemExcelController {
 	private static final String SAMPLE_XLSX_FILE_PATH = "./employee1.xlsx";
 	private static String[] odd_Array = { "Họ và tên" };
-	private static String[] odd_Array_Diem = {};
+	private static Double[] odd_Array_Diem = {};
 	private static String[] header_Array = {};
 	private static String[] colName_Array = {};
 
@@ -583,9 +583,7 @@ public class DiemExcelController {
 			// Create a CellStyle with the font
 			CellStyle headerCellStyle = workbook.createCellStyle();
 			headerCellStyle.setFont(headerFont);
-			headerCellStyle.setLocked(true);
-			headerCellStyle.setBorderBottom(BorderStyle.THIN);
-			headerCellStyle.setBorderLeft(BorderStyle.THIN);
+
 //            headerCellStyle.setLocked(false);
 
 			// Create a Row
@@ -601,7 +599,7 @@ public class DiemExcelController {
 			
 			
 			int rowNum = 1;
-			String diem1 = "";
+			Double diem1 = null;
 			List<Lop_hs> diemlist = hslrepo.getHS(tenLop);
 			for (int k=0; k < diemlist.size();k++) {
 			// Create Other rows and cells with employees data
@@ -612,8 +610,8 @@ public class DiemExcelController {
 			
 			for (int j = 0; j < diemlistByid.size(); j++) {
 
-				diem1 = diemlistByid.get(j).getDiem().toString();
-				List<String> oddlist2 = new ArrayList<String>(Arrays.asList(odd_Array_Diem));
+				diem1 = diemlistByid.get(j).getDiem();
+				List<Double> oddlist2 = new ArrayList<Double>(Arrays.asList(odd_Array_Diem));
 
 				// Add the new element
 				oddlist2.add(diem1);
@@ -628,7 +626,7 @@ public class DiemExcelController {
 				Row row = sheet.createRow(rowNum++);
 				CellStyle RowCellStyle = workbook.createCellStyle();
 				RowCellStyle.setLocked(false);
-
+				
 				
 
 				for (int i = 0; i < odd_Array_Diem.length; i++) {
