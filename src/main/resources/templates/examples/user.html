@@ -139,6 +139,10 @@
 						th:href="@{/lop/showLop}"> <i class="fa fa-book" aria-hidden="true"></i>
 							<p>Quản lý lớp</p>
 					</a></li>
+					<li th:switch="${tkgv.chucvu}"><a th:case="'PDT'" class="nav-link"
+						th:href="@{/khoahoc/showkhoahoc}"> <i class="fa fa-calendar" aria-hidden="true"></i>
+							<p>Khóa học</p>
+					</a></li>
 					<li th:switch="${tkgv.chucvu}"><a th:case="'BGH'" class="nav-link" th:href="@{/BGH}"> <i class="fa fa-user"></i>
 							<p>Quản lý tài khoản</p>
 					</a></li>
@@ -211,13 +215,13 @@
                                 <div class="card-body">
                                     <form>
                                         <div class="row">
-                                            <div class="col-md-5 pr-1">
+                                            <div class="col-md-4 pr-1">
                                                 <div class="form-group">
                                                     <label>Họ và Tên</label>
                                                     <input type="text" class="form-control" disabled=""  th:value="*{tkgv.giaovienfk.ten}">
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 px-1">
+                                            <div class="col-md-4 px-1">
                                                 <div class="form-group">
                                                     <label>Tên người dùng</label>
                                                     <input type="text" class="form-control" disabled=""  th:value="*{tkgv.tentk}">
@@ -226,13 +230,13 @@
                                             <div class="col-md-4 pl-1">
                                                 <div class="form-group">
                                                     <label>Mật khẩu</label>
-                                                    <input type="email" class="form-control" disabled="" th:value="*{tkgv.matkhau}">
+                                                    <input type="password" class="form-control" disabled="" th:value="*{tkgv.matkhau}">
                                                 </div>
                                             </div> 
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-4">
                                                 <div class="form-group" th:switch="${tkgv.chucvu}">
                                                     <label>Chức vụ</label>
                                                     <input th:case="'GVBM'" type="text" class="form-control" placeholder="Home Address" value="Giáo viên bộ môn" disabled="">

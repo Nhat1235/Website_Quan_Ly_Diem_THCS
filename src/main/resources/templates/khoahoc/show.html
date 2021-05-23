@@ -37,7 +37,8 @@
 
 <script type="text/javascript" charset="utf8"
 	src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js" defer></script>
-	
+	<script src="//code.jquery.com/jquery-1.11.3.min.js" ></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" defer></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -51,8 +52,49 @@ $(document).ready(function() {
 
 	});
 });
+
+$(document).ready(function () {
+	
+	$.validator.addMethod("validatetenlop", function (value, element) {
+        return this.optional(element) || /^(20)\d{2}$/g.test(value);
+    }, "Năm học chỉ được phép từ năm 2000 trở đi");
+	
+	
+    $('#KhoaH').validate({
+    	
+        rules: {
+        	"nam": {
+                required: true,
+                maxlength: 4,
+                validatetenlop: true
+            },
+            
+        },
+        
+        messages: {
+        	"nam": {
+                required: 'Không được phép để trống',
+                maxlength:'Tên tài khoản chỉ được phép tối đa 4 ký tự'
+            },
+            
+        },
+    });
+
+    
+});
 </script>
 <style>
+label.error{
+			display: block;
+		}
+input.error {
+    border: 1px solid red;
+}
+
+label.error {
+    font-weight: normal;
+    color: red;
+}
 hr.separator {
 	border-top: 1px solid red;
 	content: '';
@@ -194,11 +236,11 @@ hr.separator {
 							</div>
 							<div class="card">
 								
-									<form th:action="@{saveKhoaH}" method="POST" th:object="${khoahoc1}" style="margin:20px">
+									<form id="KhoaH" th:action="@{saveKhoaH}" method="POST" th:object="${khoahoc1}" style="margin:20px">
 										<table>
 											<tr>
 												<td>Tên Khóa Học:</td>
-												<td><input th:field="*{nam}" type="text" name="nam" /></td>
+												<td><input id="nam" type="text" name="nam" /></td>
 											</tr>
 											<tr>
 												<td></td>

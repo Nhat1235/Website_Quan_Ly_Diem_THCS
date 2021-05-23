@@ -30,8 +30,22 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
 
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js" defer></script>
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js" ></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" defer></script>
 </head>
 <style>
+label.error{
+			display: block;
+		}
+input.error {
+    border: 1px solid red;
+}
+
+label.error {
+    font-weight: normal;
+    color: red;
+}
 hr.separator {
 	border-top: 1px solid red;
 	content: '';
@@ -99,6 +113,36 @@ hr.separator {
 			"bAutoWidth" : false,
 
 		});
+	});
+	
+$(document).ready(function () {
+		
+		$.validator.addMethod("validatetenlop", function (value, element) {
+            return this.optional(element) || /^[6-9]{1}[A-Z]{1}$/g.test(value);
+        }, "Tên lớp phải là 1 số từ 6 đến 9 kết hợp với 1 chữ cái từ A đến Z");
+		
+		
+	    $('#formTenLop').validate({
+	    	
+	        rules: {
+	        	"tenlop": {
+	                required: true,
+	                maxlength: 2,
+	                validatetenlop: true
+	            },
+	            
+	        },
+	        
+	        messages: {
+	        	"tenlop": {
+	                required: 'Không được phép để trống',
+	                maxlength:'Tên tài khoản chỉ được phép tối đa 2 ký tự'
+	            },
+	            
+	        },
+	    });
+
+	    
 	});
 </script>
 <body>
@@ -184,11 +228,11 @@ hr.separator {
 							<div class="card ">
 								<div class="card-body table-full-width table-responsive"
 									style="margin: 5px">
-									<form th:action="@{saveLop}" method="POST" th:object="${lop}">
+									<form th:action="@{saveLop}" id="formTenLop" method="POST" th:object="${lop}">
 										<table>
 											<tr>
 												<td>Tên lớp &nbsp</td>
-												<td><input th:field="*{tenlop}" type="text" name="nam" required="required"/></td>
+												<td><input id="tenlop" type="text" name="tenlop" required="required"/></td>
 											</tr>
 											<tr>
 												<td>Khóa Học &nbsp</td>
