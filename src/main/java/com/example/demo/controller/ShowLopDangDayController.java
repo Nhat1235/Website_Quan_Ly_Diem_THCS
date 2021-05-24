@@ -163,10 +163,12 @@ public class ShowLopDangDayController {
 		TaiKhoanGv tkgv = TKGvRepo.findAllDetail(authentication.getName());
 
 		String lop = "";
-
+		Integer idgvlm;
 		List<GV_Lop_Mon> list = repo.FindLopDangDay(tkgv.getGiaovienfk().getTen());
 		for (GV_Lop_Mon list2 : list) {
 			lop = list2.getIDLop().getTenlop();
+			idgvlm = list2.getIdGv_L_M();
+			model.addAttribute("idgvlm", idgvlm);
 		}
 
 		System.out.println("Print Data:" + tkgv.getGiaovienfk().getTen() + " " + authentication.getName() + " Lop:"
@@ -259,7 +261,7 @@ public class ShowLopDangDayController {
 		for (int i = 0; i < hsllist.size(); i++) {
 			System.out.println("với id_hs: " + hsllist.get(i).getIdLopHs() + " - Học sinh: " + hsllist.get(i).getIdhs().getTenhocsinh());
 			
-			diemlistByid = DRepo.findDiemById(hsllist.get(i).getIdLopc().getIdlop().toString().trim(),hsllist.get(i).getIdLopHs().toString().trim(),idGVLM.toString().trim());
+			diemlistByid = DRepo.findDiemById(hsllist.get(i).getIdLopHs().toString().trim(),idGVLM.toString().trim());
 
 			for (int j = 0; j < diemlistByid.size(); j++) {
 				l.put(hsllist.get(i).getIdhs().getTenhocsinh(), diemlistByid);

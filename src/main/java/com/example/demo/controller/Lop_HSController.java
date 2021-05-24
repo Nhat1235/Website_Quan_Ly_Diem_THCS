@@ -16,11 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.demo.model.DauDiem;
+import com.example.demo.model.Diem;
+import com.example.demo.model.GV_Lop_Mon;
 import com.example.demo.model.HocSinh;
 import com.example.demo.model.Lop;
 import com.example.demo.model.Lop_hs;
 import com.example.demo.model.TaiKhoanGv;
+import com.example.demo.repositories.DauDiemRepository;
+import com.example.demo.repositories.DiemRepository;
+import com.example.demo.repositories.GV_L_MRepository;
 import com.example.demo.repositories.HocSinhRepository;
+import com.example.demo.repositories.LopRepository;
 import com.example.demo.repositories.Lop_HocSinhrepository;
 import com.example.demo.repositories.TaiKhoanGvRepository;
 import com.example.demo.service.LopService;
@@ -44,6 +51,21 @@ public class Lop_HSController {
 	
 	@Autowired
 	Lop_HocSinhrepository lhsrepo;
+	
+	@Autowired
+	DiemRepository diemrepo;
+	
+	@Autowired
+	LopRepository loprep;
+	
+	@Autowired
+	Lop_HocSinhrepository lophsrep;
+	
+	@Autowired
+	GV_L_MRepository glmrepo; 
+	
+	@Autowired
+	DauDiemRepository daudiemrep;
 	
 	@GetMapping(value = "show")
 	public String show(Model model) {
@@ -92,8 +114,42 @@ public class Lop_HSController {
 	public RedirectView addtolop(@PathVariable("idlophs")Integer idlophs, @PathVariable("idlop")Integer idlop) {
 	   System.out.println(idlophs);
 	   
+	   List<Diem> list = diemrepo.findDiemById(idlophs.toString());
+	   
+	   if(list.size()>0) {
+		   
+		   System.out.println("Đã có!!");
+		   
+	   }else {
+		   
+		   List<GV_Lop_Mon> listlop = glmrepo.getlopbyidl(idlop.toString());
+		   Lop_hs listlophs = lophsrep.getOnes(idlophs);
+		   System.out.println(listlophs.getIdLopHs());
+		   
+		   for(int i=0; i<listlop.size(); i++) {
+			   
+			   String tenmon = listlop.get(i).getIDMon().getTenMon();
+			   System.out.println(listlop.get(i).getIDMon().getIdMon()+"-"+tenmon);
+			   GV_Lop_Mon gvlm = glmrepo.getgvlm(listlop.get(i).getIdGv_L_M().toString());
+			   
+			   List<DauDiem> lidd = daudiemrep.getDauDiemByMon(listlop.get(i).getIDMon().getIdMon());
+			   System.out.println(lidd.size());
+			   for(int j=0; j<lidd.size(); j++) {
+				   DauDiem dd = daudiemrep.getDauDiemBydd(lidd.get(j).getIdDauDiem());
+				   System.out.println("rê: "+dd.getIdDauDiem()+" - "+gvlm.getIdGv_L_M() );
+				   Diem diem = new Diem();
+				   diem.setDiem(0.0);
+				   diem.setTrangThai(false);
+				   diem.setIDLopHS(listlophs);
+				   diem.setIDDauDiem(dd);
+				   diem.setIDGV_L_M(gvlm);
+				   System.out.println("Điểm: "+ diem.getIDDauDiem().getLoaiDauDiem()+"-"+ diem.getIDGV_L_M().getIDMon().getTenMon());
+				   diemrepo.save(diem);
+			   }
+		   }
+	   }
 	   lhsrepo.updateLHS2(idlophs,idlop);
-		
+	   
 	   return new RedirectView("/lophs/showLop/"+idlop);
 	}
 	

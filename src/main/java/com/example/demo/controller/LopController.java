@@ -19,6 +19,7 @@ import com.example.demo.model.Lop;
 import com.example.demo.model.Lop_hs;
 import com.example.demo.model.TaiKhoanGv;
 import com.example.demo.repositories.GV_L_MRepository;
+import com.example.demo.repositories.LopRepository;
 import com.example.demo.repositories.Lop_HocSinhrepository;
 import com.example.demo.repositories.TaiKhoanGvRepository;
 import com.example.demo.service.KhoaHocService;
@@ -30,6 +31,9 @@ public class LopController {
 
 	@Autowired
 	LopService lopService;
+	
+	@Autowired
+	LopRepository loprep;
 
 	@Autowired
 	KhoaHocService khoaHocService;
@@ -103,8 +107,14 @@ public class LopController {
 	
 	@PostMapping(value = "saveLop")
 	public String doSaveLop(@ModelAttribute("Lop") Lop lop,Model model) {
-	
-		lopService.save(lop);
+		List<Lop> list = loprep.getLop(lop.getTenlop().toString().trim());
+		
+		if(list.size()>0) {
+			System.out.println("Fail add lop");
+		}else {
+			lopService.save(lop);
+	}
+		
 		
 		return "redirect:showLop";
 		

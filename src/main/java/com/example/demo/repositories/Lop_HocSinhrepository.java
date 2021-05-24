@@ -48,4 +48,7 @@ public interface Lop_HocSinhrepository extends JpaRepository<Lop_hs, Integer> {
     @Query(value= "select * from lop_hs where idlop=4", nativeQuery = true)
 	public List<Lop_hs> findHSWithoutLop();
 	
+	@Query(value="select * from lop_hs where idlophs=:idlophs", nativeQuery = true)
+	public Lop_hs getOnes(@Param("idlophs")Integer idlophs);
+
 }

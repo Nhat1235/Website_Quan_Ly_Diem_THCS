@@ -516,11 +516,11 @@ public class DiemExcelController {
 
 	}
 
-	@GetMapping("/GV/SampleFileWithData/{idMon}/{tenLop}/{lop}/{idlhs}")
+	@GetMapping("/GV/SampleFileWithData/{idMon}/{tenLop}/{lop}/{idGVLM}")
 
 	public void exportToExcel32(HttpServletResponse response, HttpServletRequest request,
 			@PathVariable("idMon") Integer Idm, @PathVariable("tenLop") String tenLop,
-			@PathVariable("lop") String idlop, @PathVariable("idlhs") String idlhs) throws IOException {
+			@PathVariable("lop") String idlop, @PathVariable("idGVLM") String idlhs) throws IOException {
 
 		try {
 			response.setContentType("application/vnd.ms-excel");
@@ -601,12 +601,12 @@ public class DiemExcelController {
 			int rowNum = 1;
 			Double diem1 = null;
 			List<Lop_hs> diemlist = hslrepo.getHS(tenLop);
+			System.out.println("SOSOSOSOSSOSOS: "+diemlist.size() );
 			for (int k=0; k < diemlist.size();k++) {
-			// Create Other rows and cells with employees data
 			
-			List<Diem> diemlistByid = Drepo.findDiemById(idlop, diemlist.get(k).getIdLopHs().toString());
+			List<Diem> diemlistByid = Drepo.findDiemById(diemlist.get(k).getIdLopHs().toString(), idlhs);
 			
-			
+			System.out.println("SOSOSOSOSSOSOS1: "+diemlistByid.size()+" với idlophs: "+ diemlist.get(k).getIdLopHs().toString() );
 			
 			for (int j = 0; j < diemlistByid.size(); j++) {
 
@@ -621,7 +621,7 @@ public class DiemExcelController {
 				System.out.println(diemlistByid.get(j).getIdDiem() + " - " + diem1+" - "+diemlist.get(k).getIdLopHs());
 				System.out.println("\nArray Diem after adding element " + diem1 + ":" + Arrays.toString(odd_Array_Diem));
 			}
-
+			System.out.println("-----");
 
 				Row row = sheet.createRow(rowNum++);
 				CellStyle RowCellStyle = workbook.createCellStyle();
@@ -666,6 +666,7 @@ public class DiemExcelController {
 			// Closing the workbook
 			workbook.close();
 			odd_Array = new String[] { "Họ và tên" };
+			odd_Array_Diem = new Double[] {};
 		} catch (final Exception e) {
 
 		}

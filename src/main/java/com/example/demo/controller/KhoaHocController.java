@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.model.HocSinh;
 import com.example.demo.model.KhoaHoc;
 import com.example.demo.model.TaiKhoanGv;
+import com.example.demo.repositories.KhoaHocRepository;
 import com.example.demo.repositories.TaiKhoanGvRepository;
 import com.example.demo.service.KhoaHocService;
 
@@ -26,6 +27,9 @@ public class KhoaHocController {
 	
 	@Autowired
 	KhoaHocService khoaHocService;
+	
+	@Autowired
+	KhoaHocRepository khrep;
 	
 	@GetMapping(value = "showkhoahoc")
 	public String showKhoaHoc(Model model, Authentication authentication) {
@@ -50,9 +54,14 @@ public class KhoaHocController {
 	}
 	@PostMapping(value = "saveKhoaH")
 	public String doSaveKhoaH(@ModelAttribute("KhoaHoc") KhoaHoc khoahoc,Model model) {
-	
-		khoaHocService.save(khoahoc);
 		
+		List<KhoaHoc> list = khrep.getNamKhoaHoc(khoahoc.getNam().toString().trim());
+			
+		if(list.size()>0) {
+			System.out.println("Fail add khóa học");
+		}else {
+		khoaHocService.save(khoahoc);
+	}
 		return "redirect:showkhoahoc";
 		
 	}

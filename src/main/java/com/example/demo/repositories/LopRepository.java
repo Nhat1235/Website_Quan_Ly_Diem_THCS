@@ -22,7 +22,8 @@ public interface LopRepository extends JpaRepository<Lop, Integer>{
 	@Query(value = "select * from lop where tenlop=:ten",nativeQuery = true)
 	public List<Lop> getLop(@Param("ten")String ten);
 
-	/* public Lop findByTenLop(String string); */
+	@Query(value = "select * from lop where idlop=:ten",nativeQuery = true)
+	public List<Lop> getLopById(@Param("ten")String ten);
 	
 	
 	

@@ -258,29 +258,334 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
-</style>
+body {
+	background-repeat: no-repeat;
+	background-position: center center;
+	/* color: white; */
+	/* font-family: Arial, Helvetica, sans-serif; */
+	height: calc(100% - 150px);
+	background-position: center;
+	background-size: cover;
+}
 
+#logreg-forms {
+	width: 600px;
+	margin: 40vh 103vh auto;
+	padding: 50px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 2px 3px rgba(0, 0, 0, 0.24);
+	transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+	transform: translate(-50%,-50%);
+    background: rgba(255,255,255,0.04);
+    box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
+	
+}
+
+#logreg-forms form {
+
+	width: 100%;
+	max-width: 410px;
+	padding: 20px;
+	margin: auto;
+}
+
+#logreg-forms .form-control {
+	position: relative;
+	box-sizing: border-box;
+	height: auto;
+	padding: 10px;
+	font-size: 16px;
+}
+
+#logreg-forms .form-control:focus {
+	z-index: 2;
+}
+
+#logreg-forms .form-signin input[type="text"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+#logreg-forms .form-signin input[type="password"] {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+#logreg-forms .social-login {
+	width: 390px;
+	margin: 0 auto;
+	margin-bottom: 14px;
+}
+
+#logreg-forms .social-btn {
+	font-weight: 100;
+	color: white;
+	width: 190px;
+	font-size: 0.9rem;
+}
+
+.a {
+	color: white
+}
+#logreg-forms a:hover{
+	color: aqua;
+	text-decoration: none;
+}
+
+#logreg-form .lines {
+	width: 200px;
+	border: 1px solid red;
+}
+
+#logreg-forms button[type="submit"] {
+	margin-top: 10px;
+}
+
+#logreg-forms .facebook-btn {
+	background-color: #3C589C;
+}
+
+#logreg-forms .google-btn {
+	background-color: #DF4B3B;
+}
+
+#logreg-forms .form-reset, #logreg-forms .form-signup {
+	display: none;
+}
+
+#logreg-forms .form-signup .social-btn {
+	width: 210px;
+}
+
+#logreg-forms .form-signup input {
+	margin-bottom: 2px;
+}
+
+.form-signup .social-login {
+	width: 210px !important;
+	margin: 0 auto;
+}
+
+input {
+	margin-top: 10px;
+}
+
+/* Mobile */
+@media screen and (max-width:500px) {
+	#logreg-forms {
+		width: 300px;
+	}
+	#logreg-forms .social-login {
+		width: 200px;
+		margin: 0 auto;
+		margin-bottom: 10px;
+	}
+	#logreg-forms .social-btn {
+		font-size: 1.3rem;
+		font-weight: 100;
+		color: white;
+		width: 200px;
+		height: 56px;
+	}
+	#logreg-forms .social-btn:nth-child(1) {
+		margin-bottom: 5px;
+	}
+	#logreg-forms .social-btn span {
+		display: none;
+	}
+	#logreg-forms .facebook-btn:after {
+		content: 'Facebook';
+	}
+	#logreg-forms .google-btn:after {
+		content: 'Google+';
+	}
+}
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+/* 
+body{
+    font-family: 'Exo', sans-serif;
+} */
+
+
+.context {
+    width: 100%;
+    position: absolute;
+    top:50vh;
+    
+}
+
+.context h1{
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
+
+
+.area{
+    background: #5683f5;  
+    background: -webkit-linear-gradient(to left, #8faefb, #96b4ff);  
+    width: 100%;
+    height:100vh;
+    
+   
+}
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+</style>
+<body  class="area">
+ <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+	<br>
+	<br>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form th:action="@{login}" method="post">
+		<form th:action="@{/login}" method="post">
 			<h1>Đăng nhập</h1>
             <br>
-			<span>với tài khoản của phụ huynh, học sinh</span>
-			<input type="text" class="form-control" name="" placeholder="Tên đăng nhập" required="required"> 
-		    <input type="password" class="form-control" name="" placeholder="Mật khẩu" required="required">
+			<span>với tài khoản tra cứu của học sinh</span>
+			<input type="text" class="form-control" id="usernameHS" name="usernameHS" placeholder="Tên đăng nhập" required="required"> 
+		    <input type="password" class="form-control" id="passwordHS" name="passwordHS" placeholder="Mật khẩu" required="required">
             <!-- <a href="#">Quên mật khẩu?</a> -->
 			<input class="btn btn-warning" type="submit" name="Đăng nhập" value="Đăng nhập"/>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
 		<form th:action="@{/login}" method="post">
-			<h1>Đăng nhập</h1>
+			<h1 style="color:black">Đăng nhập</h1>
             <br>
-			<span>với tài khoản của giáo viên, ban giám hiệu nhà trường</span>
-			<input type="text" id="username" name="username" placeholder="Tên đăng nhập" required="required" autofocus="autofocus"> 
-		    <input type="password" id="password" name="password" placeholder="Mật khẩu" required="required">
+			<span style="color:black">với tài khoản của giáo viên, ban giám hiệu nhà trường</span>
+			<input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập" required="required" autofocus="autofocus"> 
+		    <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required="required">
             <!-- <a href="#">Quên mật khẩu?</a> -->
-			<input class="btn btn-warning" type="submit"  name="Đăng nhập" value="Đăng nhập"/>
+			<input class="btn btn-primary" type="submit"  name="Đăng nhập" value="Đăng nhập"/>
 		</form>
 	</div>
 	<div class="overlay-container">
@@ -288,16 +593,17 @@ footer a {
 			<div class="overlay-panel overlay-left">
 				<h1 >Chào mừng đến với trang quản lý điểm trường THCS</h1>
 				<p>Xin hãy đăng nhập vào tài khoản để tiếp tục</p>
-				<button class="ghost" id="signIn">Đăng nhập dành cho giáo viên</button>
+				<!-- <button class="ghost" id="signIn">Đăng nhập dành cho giáo viên</button> -->
 			</div>
 			<div class="overlay-panel overlay-right">
 				<h1>Chào mừng đến với trang quản lý điểm trường THCS</h1>
 				<p>Xin hãy đăng nhập vào tài khoản để tiếp tục</p>
-				<button class="ghost" id="signUp">Đăng nhập dành cho học sinh</button>
+				<!-- <button class="ghost" id="signUp">Đăng nhập dành cho học sinh</button> -->
 			</div>
 		</div>
 	</div>
 </div>
+</body>
 
 <footer>
 </footer>

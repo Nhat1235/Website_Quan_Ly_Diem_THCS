@@ -17,6 +17,6 @@ public interface KhoaHocRepository extends JpaRepository<KhoaHoc, Integer>{
 	@Query(value = "select * from khoahoc where idkhoahoc=:idkhoahoc",nativeQuery = true)
 	public List<KhoaHoc> findAll(@Param("idkhoahoc")String keyword);
 	
-//	@Query(value = "select distinct nam from khoahoc",nativeQuery = true)
-//	public List<KhoaHoc> getNamKhoaHoc();
+	@Query(value = "select * from khoahoc where Nam=:nam",nativeQuery = true)
+	public List<KhoaHoc> getNamKhoaHoc(@Param("nam")String nam);
 }

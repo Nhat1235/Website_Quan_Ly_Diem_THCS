@@ -30,4 +30,11 @@ public interface GV_L_MRepository extends JpaRepository<GV_Lop_Mon, Integer>{
      
      @Query(value="select * from gv_lop_mon inner join lop on gv_lop_mon.idlop = lop.idlop inner join khoahoc on lop.idkhoahoc= khoahoc.idkhoahoc inner join giaovien on GV_lop_mon.idGV = giaovien.idGV inner join Mon on GV_lop_mon.idmon = mon.idmon where tenlop=:tenlop and khoahoc.idkhoahoc=:Nam and TenMon=:tenmon",nativeQuery = true)
      List<GV_Lop_Mon>countLopDetails(@Param("tenlop")String tenlop, @Param("Nam")String nam, @Param("tenmon")String tenmon);
+     
+     
+     @Query(value="select * from Gv_lop_mon where idlop=:idlop",nativeQuery = true)
+     List<GV_Lop_Mon>getlopbyidl(@Param("idlop")String idlop);
+     
+     @Query(value="select * from Gv_lop_mon where idgv_l_m=:idlop",nativeQuery = true)
+     public GV_Lop_Mon getgvlm(@Param("idlop")String idlop);
 }

@@ -18,4 +18,7 @@ public interface DauDiemRepository extends JpaRepository<DauDiem, Integer>{
 	@Query(value="select * from daudiem where idmon =:idmon",nativeQuery = true)
 	List<DauDiem> getDauDiemByMon(@Param("idmon")Integer idmon);
 	
+	@Query(value="select * from daudiem where iddaudiem =:idmon",nativeQuery = true)
+	DauDiem getDauDiemBydd(@Param("idmon")Integer idmon);
+	
 }
